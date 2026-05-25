@@ -1446,6 +1446,20 @@ input[type=range]::-webkit-slider-thumb:hover {
   will-change: transform, opacity;
 }
 
+/* Custom scrollbar for search dropdown */
+.search-results-dropdown::-webkit-scrollbar {
+  width: 6px;
+}
+
+.search-results-dropdown::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.search-results-dropdown::-webkit-scrollbar-thumb {
+  background: var(--glass-border);
+  border-radius: 999px;
+}
+
 @keyframes dropdownReveal {
   from {
     opacity: 0;

@@ -116,7 +116,7 @@ const Header = ({ setIsCollapsed, isCollapsed }) => {
             <X size={20} />
           </button>
           
-          <div className="search-bar-container" style={{ position: 'relative', flex: 1 }}>
+          <div className="search-bar-container" style={{ position: 'relative', flex: 1, width: '100%' }}>
             <div className="search-bar" style={{ 
               display: 'flex', 
               alignItems: 'center', 
@@ -124,7 +124,8 @@ const Header = ({ setIsCollapsed, isCollapsed }) => {
               background: 'var(--glass-hover)', 
               border: '1px solid var(--glass-border)', 
               padding: '0.6rem 1.2rem', 
-              borderRadius: '9999px' 
+              borderRadius: '9999px',
+              width: '100%'
             }}>
               <Search size={16} color="var(--text-secondary)" />
               <input 
@@ -203,7 +204,7 @@ const Header = ({ setIsCollapsed, isCollapsed }) => {
             </div>
 
             {showResults && query.trim() !== '' && (
-              <div className="search-results-dropdown glass-card">
+              <div className="search-results-dropdown glass-card mobile-hide">
                 {searchResults.length > 0 ? searchResults.map(([path, data]) => (
                   <button 
                     key={path}
