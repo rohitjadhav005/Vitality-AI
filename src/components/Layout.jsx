@@ -10,9 +10,10 @@ const Layout = () => {
   return (
     <div className="app-layout">
       {/* Mobile Drawer Backdrop */}
-      {!isCollapsed && (
-        <div className="drawer-backdrop d-md-none" onClick={() => setIsCollapsed(true)} />
-      )}
+      <div 
+        className={`sidebar-backdrop ${isCollapsed ? 'hidden' : ''}`} 
+        onClick={() => setIsCollapsed(true)} 
+      />
       
       <Sidebar isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />
       

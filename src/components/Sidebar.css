@@ -12,7 +12,7 @@
   border-right: 1px solid var(--glass-border);
   position: relative;
   /* Smooth transition for collapses and drawer actions */
-  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), padding 0.3s ease, background-color 0.3s ease;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), width 0.3s cubic-bezier(0.4, 0, 0.2, 1), padding 0.3s ease, background-color 0.3s ease;
 }
 
 .sidebar-logo {
@@ -305,20 +305,17 @@
 .sidebar-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(15, 12, 41, 0.25);
+  background: rgba(15, 12, 41, 0.4);
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
   z-index: 99;
-  /* Sits directly beneath the drawer sidebar */
-  animation: fadeIn 0.2s ease-out;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
+.sidebar-backdrop.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
 }
