@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import { Target, Plus, Trash2, CheckCircle2, Clock, TrendingUp, Zap, Moon, Droplets, Dumbbell, Brain, X, Sparkles } from 'lucide-react';
 
+import { apiUrl } from '../config/api';
+import { useRealtime } from '../hooks/useRealtime';
+
 const initialGoals = [
-  { id: 1, title: 'Sleep 8 Hours Daily', category: 'sleep', target: 8, current: 6.5, unit: 'hrs', deadline: '2026-06-01', status: 'in-progress', icon: 'moon' },
-  { id: 2, title: 'Reduce Stress Below 3', category: 'stress', target: 3, current: 5, unit: '/10', deadline: '2026-05-30', status: 'in-progress', icon: 'brain' },
+  { id: 1, title: 'Sleep 8 Hours Daily', category: 'sleep', target: 8, current: 6.5, unit: 'hrs', deadline: '2026-06-01', status: 'in-progress', icon: 'moon', metricKey: 'Sleep_Quality' },
+  { id: 2, title: 'Reduce Stress Below 3', category: 'stress', target: 3, current: 5, unit: '/10', deadline: '2026-05-30', status: 'in-progress', icon: 'brain', metricKey: 'Stress_Level' },
   { id: 3, title: 'Exercise 45 Min Daily', category: 'exercise', target: 45, current: 45, unit: 'min', deadline: '2026-05-25', status: 'completed', icon: 'dumbbell' },
   { id: 4, title: 'Drink 3L Water Daily', category: 'hydration', target: 3, current: 2.1, unit: 'L', deadline: '2026-06-10', status: 'in-progress', icon: 'droplets' },
-  { id: 5, title: 'Energy Score Above 85', category: 'energy', target: 85, current: 72, unit: 'pts', deadline: '2026-06-15', status: 'in-progress', icon: 'zap' },
+  { id: 5, title: 'Energy Score Above 85', category: 'energy', target: 85, current: 72, unit: 'pts', deadline: '2026-06-15', status: 'in-progress', icon: 'zap', metricKey: 'Energy_Score' },
 ];
 
 const iconMap = { moon: Moon, brain: Brain, dumbbell: Dumbbell, droplets: Droplets, zap: Zap };
@@ -36,8 +39,19 @@ const CircleProgress = ({ percent, color, size = 65 }) => {
 const GoalCard = ({ goal, onDelete, onComplete }) => {
   const Icon = iconMap[goal.icon] || Target;
   const col = categoryColors[goal.category] || { color: 'var(--text-primary)', bg: 'var(--glass-border)' };
-  const progress = Math.min(100, Math.round((goal.current / goal.target) * 100));
-  const isCompleted = goal.status === 'completed';
+  
+  // Calculate progress dynamically based on target and current values
+  let progress = 0;
+  if (goal.category === 'stress') {
+    // For stress, lower is better. Target is 3, max stress is 10.
+    // So progress is (10 - current) / (10 - target) * 100
+    // If current is 3 or below, it's 100%. If current is 10, it's 0%.
+    progress = goal.current <= goal.target ? 100 : Math.max(0, Math.round(((10 - goal.current) / (10 - goal.target)) * 100));
+  } else {
+    progress = Math.min(100, Math.round((goal.current / goal.target) * 100));
+  }
+  
+  const isCompleted = goal.status === 'completed' || progress >= 100;
 
   return (
     <div className={`goal-card-pro glass-card ${isCompleted ? 'goal-completed' : ''}`} style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1.2rem', position: 'relative', overflow: 'hidden', borderLeft: `4px solid ${col.color}`, transition: 'all 0.3s' }} onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-4px)'} onMouseLeave={e => e.currentTarget.style.transform = 'none'}>
@@ -101,6 +115,34 @@ const Goals = () => {
   const [filter, setFilter] = useState('all');
   const [newGoal, setNewGoal] = useState({ title: '', category: 'sleep', target: '', current: '', unit: '', deadline: '', icon: 'moon' });
 
+  // Fetch live health metrics to update goal progress
+  const fetchLiveMetrics = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) return;
+      const res = await fetch(apiUrl('/api/dashboard/summary'), {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setGoals(prev => prev.map(goal => {
+          if (goal.metricKey && data[goal.metricKey] !== undefined) {
+            return { ...goal, current: parseFloat(data[goal.metricKey].toFixed(1)) };
+          }
+          return goal;
+        }));
+      }
+    } catch (e) {
+      console.error('Failed to sync live metrics for goals', e);
+    }
+  };
+
+  React.useEffect(() => {
+    fetchLiveMetrics();
+  }, []);
+
+  useRealtime(fetchLiveMetrics);
+
   const handleDelete = (id) => setGoals(g => g.filter(x => x.id !== id));
   const handleComplete = (id) => setGoals(g => g.map(x => x.id === id ? { ...x, status: 'completed', current: x.target } : x));
 
@@ -112,7 +154,7 @@ const Goals = () => {
   };
 
   const filtered = filter === 'all' ? goals : goals.filter(g => g.status === filter);
-  const completed = goals.filter(g => g.status === 'completed').length;
+  const completed = goals.filter(g => g.status === 'completed' || (g.category === 'stress' ? g.current <= g.target : (g.current / g.target) >= 1)).length;
   const total = goals.length;
 
   return (
