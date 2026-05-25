@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Bell, Search, Menu, ChevronRight } from 'lucide-react';
+import { Bell, Search, Menu, ChevronRight, Settings, LogOut, User } from 'lucide-react';
+import { useAuth } from './AuthContext';
 
 const pageMeta = {
   '/':             { title: 'Dashboard',      subtitle: 'Good morning! Here\'s your health overview for today.' },
@@ -19,12 +20,28 @@ const Header = ({ setIsCollapsed, isCollapsed }) => {
   const navigate = useNavigate();
   const [query, setQuery] = useState('');
   const [showResults, setShowResults] = useState(false);
+  const [showProfile, setShowProfile] = useState(false);
   const searchRef = useRef(null);
+  const profileRef = useRef(null);
+  const { logout, token } = useAuth();
+
+  const getUsername = () => {
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      return payload.username || 'User';
+    } catch {
+      return 'User';
+    }
+  };
+  const username = getUsername();
 
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (searchRef.current && !searchRef.current.contains(event.target)) {
         setShowResults(false);
+      }
+      if (profileRef.current && !profileRef.current.contains(event.target)) {
+        setShowProfile(false);
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
@@ -47,6 +64,11 @@ const Header = ({ setIsCollapsed, isCollapsed }) => {
     navigate(path);
     setQuery('');
     setShowResults(false);
+  };
+
+  const handleLogout = () => {
+    logout();
+    navigate('/');
   };
 
   return (
@@ -138,6 +160,93 @@ const Header = ({ setIsCollapsed, isCollapsed }) => {
             <Bell size={18} />
             <span className="badge" />
           </button>
+          
+          {/* Profile Dropdown */}
+          <div className="header-profile-container mobile-hide" style={{ position: 'relative' }} ref={profileRef}>
+            <button 
+              className="header-profile-avatar" 
+              onClick={() => setShowProfile(!showProfile)}
+              style={{
+                width: '40px',
+                height: '40px',
+                borderRadius: '50%',
+                background: 'linear-gradient(135deg, #10B981, #059669)',
+                border: 'none',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: 'white',
+                fontWeight: 700,
+                fontSize: '1rem',
+                cursor: 'pointer',
+                boxShadow: 'var(--shadow-sm)',
+                transition: 'transform 0.2s',
+                textTransform: 'uppercase'
+              }}
+              onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.05)'}
+              onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
+            >
+              {username.charAt(0)}
+            </button>
+            
+            {showProfile && (
+              <div className="profile-dropdown glass-card fade-in" style={{
+                position: 'absolute',
+                top: 'calc(100% + 12px)',
+                right: 0,
+                minWidth: '240px',
+                background: 'var(--sidebar-bg)',
+                border: '1px solid var(--glass-border)',
+                borderRadius: '16px',
+                padding: '0.8rem',
+                boxShadow: '0 10px 40px rgba(0,0,0,0.5)',
+                zIndex: 100,
+                display: 'flex',
+                flexDirection: 'column'
+              }}>
+                <div style={{ padding: '0.5rem 0.5rem 1rem 0.5rem', display: 'flex', alignItems: 'center', gap: '0.8rem', borderBottom: '1px solid rgba(255, 255, 255, 0.08)', marginBottom: '0.5rem' }}>
+                  <div style={{
+                    width: '36px', height: '36px', borderRadius: '50%', background: 'linear-gradient(135deg, #10B981, #059669)',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: 700, fontSize: '0.9rem', textTransform: 'uppercase'
+                  }}>
+                    {username.charAt(0)}
+                  </div>
+                  <div style={{ display: 'flex', flexDirection: 'column' }}>
+                    <span style={{ fontWeight: 700, fontSize: '0.95rem', color: 'var(--text-primary)', letterSpacing: '0.5px' }}>{username.toUpperCase()}</span>
+                    <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>Health Member</span>
+                  </div>
+                </div>
+                
+                <button 
+                  onClick={() => { setShowProfile(false); navigate('/profile'); }}
+                  style={{ display: 'flex', alignItems: 'center', gap: '0.8rem', padding: '0.7rem 0.8rem', background: 'transparent', border: 'none', borderRadius: '10px', color: 'var(--text-secondary)', cursor: 'pointer', textAlign: 'left', fontWeight: 500, fontSize: '0.9rem', transition: 'all 0.2s' }}
+                  onMouseEnter={e => { e.currentTarget.style.background = 'var(--glass-hover)'; e.currentTarget.style.color = 'var(--text-primary)'; }}
+                  onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--text-secondary)'; }}
+                >
+                  <User size={16} /> Account settings
+                </button>
+                <button 
+                  onClick={() => { setShowProfile(false); navigate('/settings'); }}
+                  style={{ display: 'flex', alignItems: 'center', gap: '0.8rem', padding: '0.7rem 0.8rem', background: 'transparent', border: 'none', borderRadius: '10px', color: 'var(--text-secondary)', cursor: 'pointer', textAlign: 'left', fontWeight: 500, fontSize: '0.9rem', transition: 'all 0.2s' }}
+                  onMouseEnter={e => { e.currentTarget.style.background = 'var(--glass-hover)'; e.currentTarget.style.color = 'var(--text-primary)'; }}
+                  onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--text-secondary)'; }}
+                >
+                  <Settings size={16} /> Preferences
+                </button>
+                
+                <div style={{ height: '1px', background: 'rgba(255, 255, 255, 0.08)', margin: '0.5rem 0' }} />
+                
+                <button 
+                  onClick={handleLogout}
+                  style={{ display: 'flex', alignItems: 'center', gap: '0.8rem', padding: '0.7rem 0.8rem', background: 'transparent', border: 'none', borderRadius: '10px', color: 'var(--text-secondary)', cursor: 'pointer', textAlign: 'left', fontWeight: 500, fontSize: '0.9rem', transition: 'all 0.2s' }}
+                  onMouseEnter={e => { e.currentTarget.style.background = 'rgba(239, 68, 68, 0.1)'; e.currentTarget.style.color = 'var(--primary-color)'; }}
+                  onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--text-secondary)'; }}
+                >
+                  <LogOut size={16} /> Sign out
+                </button>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </header>
