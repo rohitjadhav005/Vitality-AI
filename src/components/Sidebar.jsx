@@ -88,7 +88,7 @@ const Sidebar = ({ isCollapsed = true, setIsCollapsed }) => {
           className="mobile-hamburger"
           onClick={() => setIsCollapsed(true)}
           aria-label="Close menu"
-          style={{ color: 'var(--text-secondary)', marginLeft: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+          style={{ color: 'var(--text-secondary)', marginLeft: 'auto' }}
         >
           <X size={24} />
         </button>
@@ -106,7 +106,6 @@ const Sidebar = ({ isCollapsed = true, setIsCollapsed }) => {
               className={({ isActive }) => `menu-item ${isActive ? 'active' : ''}`}
               data-tooltip={isCollapsed ? item.name : undefined}
               onClick={handleNavClick}
-              style={isCollapsed ? { paddingLeft: 0, paddingRight: 0, justifyContent: 'center' } : {}}
             >
               <motion.div
                 whileHover={{ scale: 1.05 }}
@@ -131,7 +130,6 @@ const Sidebar = ({ isCollapsed = true, setIsCollapsed }) => {
               className={({ isActive }) => `menu-item ${isActive ? 'active' : ''}`}
               data-tooltip={isCollapsed ? item.name : undefined}
               onClick={handleNavClick}
-              style={isCollapsed ? { paddingLeft: 0, paddingRight: 0, justifyContent: 'center' } : {}}
             >
               <motion.div
                 whileHover={{ scale: 1.05 }}
@@ -146,7 +144,7 @@ const Sidebar = ({ isCollapsed = true, setIsCollapsed }) => {
             </NavLink>
           ))}
 
-          <div style={{ height: '1px', background: 'rgba(255, 255, 255, 0.08)', margin: '1rem 0 0.5rem 0' }} />
+          <div className="sidebar-divider" style={{ height: '1px', background: 'rgba(255, 255, 255, 0.08)', margin: '1rem 0 0.5rem 0' }} />
 
           {/* Profile Card */}
           <div 
@@ -156,7 +154,6 @@ const Sidebar = ({ isCollapsed = true, setIsCollapsed }) => {
               handleNavClick();
             }}
             data-tooltip={isCollapsed ? username : undefined}
-            style={isCollapsed ? { paddingLeft: 0, paddingRight: 0, justifyContent: 'center', marginTop: 0 } : { marginTop: 0, padding: '0.6rem 0.8rem' }}
           >
             <div className="sidebar-profile-avatar">
               <img

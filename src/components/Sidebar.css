@@ -319,3 +319,36 @@
   visibility: hidden;
   pointer-events: none;
 }
+
+/* Desktop Collapsed Sidebar Styles */
+.sidebar-collapsed {
+  width: 5.5rem;
+  padding: 1.5rem 0.5rem;
+}
+
+.sidebar-collapsed .menu-item {
+  padding: 0.85rem 0;
+  justify-content: center;
+}
+
+.sidebar-collapsed .menu-item.active::before {
+  display: none;
+}
+
+.sidebar-collapsed .sidebar-profile-card {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  justify-content: center;
+  margin-top: 0.5rem !important;
+}
+
+.sidebar-collapsed .sidebar-profile-card:hover {
+  transform: translateY(-2px);
+  background: transparent !important;
+}
+
+.sidebar-collapsed .sidebar-divider {
+  display: none;
+}
