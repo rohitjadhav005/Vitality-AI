@@ -156,10 +156,7 @@ const Sidebar = ({ isCollapsed = true, setIsCollapsed }) => {
             data-tooltip={isCollapsed ? username : undefined}
           >
             <div className="sidebar-profile-avatar">
-              <img
-                src={`https://ui-avatars.com/api/?name=${encodeURIComponent(username)}&background=EF4444&color=fff&bold=true`}
-                alt={username}
-              />
+              {username.charAt(0)}
             </div>
             {!isCollapsed && (
               <div className="sidebar-profile-info">

@@ -81,8 +81,25 @@ const Profile = () => {
         <div className="profile-content-wrap" style={{ padding: '0 2.5rem 2.5rem 2.5rem', display: 'flex', flexDirection: 'column', gap: '1.5rem', position: 'relative', marginTop: '-50px' }}>
           <div className="profile-top-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: '1.5rem' }}>
             <div className="profile-avatar-wrap" style={{ position: 'relative' }}>
-              <div style={{ padding: '6px', background: 'var(--glass-bg)', borderRadius: '50%', display: 'inline-block' }}>
-                <img src={user.avatar} alt="Avatar" className="profile-avatar" style={{ width: '100px', height: '100px', borderRadius: '50%', objectFit: 'cover', border: '2px solid var(--glass-border)' }} />
+              <div 
+                className="profile-avatar" 
+                style={{ 
+                  width: '100px', 
+                  height: '100px', 
+                  borderRadius: '50%', 
+                  background: 'linear-gradient(135deg, var(--primary-color), #b91c1c)', 
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: 'white',
+                  fontWeight: 700,
+                  fontSize: '2.5rem',
+                  textTransform: 'uppercase',
+                  border: 'none',
+                  boxShadow: '0 10px 25px rgba(0,0,0,0.3)'
+                }}
+              >
+                {(user.name || 'U').charAt(0)}
               </div>
               {editing && (
                 <button className="avatar-edit-btn" style={{ position: 'absolute', right: '4px', bottom: '4px', background: 'var(--primary-color)', border: 'none', color: '#fff', width: '32px', height: '32px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', boxShadow: '0 4px 12px rgba(239, 68, 68, 0.4)' }}><Camera size={16} /></button>

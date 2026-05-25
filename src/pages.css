@@ -224,7 +224,7 @@
 .profile-hero-bg{position:absolute;inset:0;background:linear-gradient(135deg,rgba(239,68,68,0.2),rgba(239,68,68,0.05));pointer-events:none;}
 .profile-hero-content{display:flex;align-items:center;gap:1.5rem;position:relative;flex-wrap:wrap;}
 .profile-avatar-wrap{position:relative;flex-shrink:0;}
-.profile-avatar{width:5rem;height:5rem;border-radius:50%;border:0.1875rem solid var(--primary-color);object-fit:cover;}
+.profile-avatar{width:5rem;height:5rem;border-radius:50%;border:none;object-fit:cover;}
 .profile-admin-badge{position:absolute;bottom:-0.25rem;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,var(--primary-color),var(--secondary-color));color:#fff;font-size:0.6rem;font-weight:700;padding:0.125rem 0.4375rem;border-radius:0.5rem;display:flex;align-items:center;gap:0.1875rem;white-space:nowrap;}
 .avatar-edit-btn{position:absolute;top:0;right:0;background:var(--primary-color);border:none;color:#fff;width:1.5rem;height:1.5rem;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;}
 .profile-hero-info{flex:1;}

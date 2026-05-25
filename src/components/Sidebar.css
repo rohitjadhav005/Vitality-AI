@@ -188,17 +188,16 @@
   width: 2.5rem;
   height: 2.5rem;
   border-radius: 50%;
-  padding: 0.125rem;
-  background: var(--primary-color);
+  background: linear-gradient(135deg, var(--primary-color), #b91c1c);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FFFFFF;
+  font-weight: 700;
+  font-size: 1rem;
+  text-transform: uppercase;
   flex-shrink: 0;
-}
-
-.sidebar-profile-avatar img {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 0.125rem solid #FFFFFF;
+  border: none;
 }
 
 .sidebar-profile-info {
