@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#7209b7"/>
+      <stop offset="50%" stop-color="#4361ee"/>
+      <stop offset="100%" stop-color="#4cc9f0"/>
+    </linearGradient>
+    <linearGradient id="bolt" x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#4cc9f0"/>
+    </linearGradient>
+  </defs>
+  <!-- Rounded square background -->
+  <rect width="48" height="48" rx="12" fill="url(#bg)"/>
+  <!-- Brain silhouette (simplified) -->
+  <path d="M19 10C14.5 10 11 13.5 11 18C9.5 18.5 8 20 8 22.5C8 25 9.5 26.5 11 27V28C11 33.5 15.5 38 21 38H27C32.5 38 37 33.5 37 28V27C38.5 26.5 40 25 40 22.5C40 20 38.5 18.5 37 18C37 13.5 33.5 10 29 10C27.5 10 26 10.7 25 12C24 10.7 22.5 10 21 10H19Z" fill="rgba(255,255,255,0.2)" stroke="rgba(255,255,255,0.7)" stroke-width="1.5" stroke-linejoin="round"/>
+  <!-- Lightning bolt (energy/AI) -->
+  <path d="M26 14L20 24H28L22 34" stroke="url(#bolt)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

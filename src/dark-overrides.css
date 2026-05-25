@@ -1,0 +1,141 @@
+/* ============================================
+   DARK MODE OVERRIDES — Vitality AI
+   Applies when <html> has class "dark"
+   ============================================ */
+
+/* Smooth transitions on all major elements */
+*, *::before, *::after {
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* ── Sidebar ── */
+.dark .sidebar { background: var(--sidebar-bg) !important; border-right: 1px solid rgba(255,255,255,0.08) !important; }
+.dark .menu-item.active { background: var(--menu-active-bg) !important; }
+
+/* ── Cards / Glass Elements ── */
+.dark .insight-item { background: rgba(255,255,255,0.02) !important; border-color: rgba(255,255,255,0.08) !important; }
+.dark .metric-trend { background: rgba(255,255,255,0.05) !important; }
+.dark .metric-icon { background: rgba(16, 185, 129, 0.1) !important; }
+.dark input[type=range]::-webkit-slider-runnable-track { background: rgba(255,255,255,0.1) !important; }
+.dark input[type=range]::-webkit-slider-thumb { background: #1e293b !important; }
+.dark .placeholder-content { background: rgba(255,255,255,0.02) !important; border-color: rgba(255,255,255,0.1) !important; }
+.dark .score-bar-bg { background: rgba(255,255,255,0.1) !important; }
+
+/* ── Profile Dropdown & Header ── */
+.dark .profile-dropdown {
+  background: rgba(15, 23, 42, 0.97) !important;
+  border-color: rgba(255,255,255,0.1) !important;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.5) !important;
+}
+.dark .header-profile-name, .dark .dropdown-name { color: #f8fafc !important; }
+.dark .dropdown-item { color: #cbd5e1 !important; }
+.dark .dropdown-item:hover { background: rgba(255,255,255,0.05) !important; color: #f8fafc !important; }
+.dark .dropdown-divider { border-top-color: rgba(255,255,255,0.08) !important; }
+.dark .header-profile-btn { background: rgba(17, 24, 39, 0.8) !important; border-color: rgba(255,255,255,0.08) !important; }
+.dark .header-profile-btn:hover { background: rgba(31, 41, 55, 0.8) !important; }
+
+/* ── Filter Tabs ── */
+.dark .filter-tab { border-color: rgba(255,255,255,0.1) !important; color: #94a3b8 !important; }
+.dark .filter-tab:hover { background: rgba(255,255,255,0.05) !important; color: #f8fafc !important; }
+
+/* ── Goals ── */
+.dark .goal-card { background: rgba(17, 24, 39, 0.8) !important; border: 1px solid rgba(255,255,255,0.08) !important; }
+.dark .goal-progress-bar-bg { background: rgba(255,255,255,0.08) !important; }
+.dark .modal-overlay { background: rgba(0,0,0,0.75) !important; }
+.dark .modal-box { background: #0f172a !important; border: 1px solid rgba(255,255,255,0.1) !important; }
+.dark .modal-input { background: rgba(255,255,255,0.05) !important; border-color: rgba(255,255,255,0.1) !important; color: #f8fafc !important; }
+.dark .modal-cancel { border-color: rgba(255,255,255,0.1) !important; color: #94a3b8 !important; }
+.dark .modal-cancel:hover { border-color: #f8fafc !important; color: #f8fafc !important; }
+
+/* ── Notifications ── */
+.dark .notif-item { background: rgba(17,24,39,0.4) !important; border: 1px solid rgba(255,255,255,0.05) !important; }
+.dark .bulk-btn { border-color: rgba(255,255,255,0.1) !important; color: #94a3b8 !important; }
+.dark .bulk-btn:hover { background: rgba(255,255,255,0.05) !important; color: #f8fafc !important; }
+
+/* ── History ── */
+.dark .history-export-btn { border-color: rgba(255,255,255,0.1) !important; color: #94a3b8 !important; }
+.dark .history-export-btn:hover { background: rgba(255,255,255,0.05) !important; color: #f8fafc !important; }
+.dark .history-search-input { color: #f8fafc !important; }
+.dark .history-table-pro thead th { border-bottom-color: rgba(255,255,255,0.08) !important; color: #94a3b8 !important; }
+.dark .history-table-pro tbody tr { border-bottom-color: rgba(255,255,255,0.05) !important; }
+.dark .history-table-pro tbody tr:hover, .dark .selected-row { background: rgba(255,255,255,0.04) !important; }
+.dark .detail-chip { background: rgba(255,255,255,0.05) !important; }
+.dark .detail-chip strong { color: #f8fafc !important; }
+.dark .mini-bar-bg { background: rgba(255,255,255,0.08) !important; }
+.dark .unit-label, .dark .date-cell { color: #64748b !important; }
+.dark .detail-expand-row td { background: rgba(239, 68, 68, 0.06) !important; }
+
+/* ── Insights ── */
+.dark .insight-card-pro { background: rgba(17, 24, 39, 0.8) !important; }
+.dark .insight-positive { border-color: rgba(6,214,160,0.25) !important; }
+.dark .insight-warning { border-color: rgba(255,209,102,0.25) !important; }
+.dark .tip-card { background: rgba(255,255,255,0.02) !important; border: 1px solid rgba(255,255,255,0.06) !important; }
+.dark .tip-content p { color: #94a3b8 !important; }
+
+/* ── Profile ── */
+.dark .profile-edit-name { color: #f8fafc !important; }
+.dark .profile-tab { color: #94a3b8 !important; }
+.dark .profile-tab.active { color: var(--primary-color) !important; border-bottom-color: var(--primary-color) !important; }
+.dark .profile-tabs { border-bottom-color: rgba(255,255,255,0.1) !important; }
+.dark .pfield-value, .dark .admin-item-value, .dark .activity-action { color: #f8fafc !important; }
+.dark .profile-edit-input, .dark .profile-edit-textarea {
+  background: rgba(255,255,255,0.05) !important;
+  border-color: rgba(255,255,255,0.1) !important;
+  color: #f8fafc !important;
+}
+.dark .admin-item { border-bottom-color: rgba(255,255,255,0.08) !important; }
+.dark .badge-locked { border-color: rgba(255,255,255,0.1) !important; background: rgba(255,255,255,0.02) !important; }
+.dark .badge-locked-text { color: #94a3b8 !important; }
+.dark .profile-cancel-btn { border-color: rgba(255,255,255,0.1) !important; }
+.dark .profile-section-title { color: #94a3b8 !important; }
+.dark .pfield-label { color: #64748b !important; }
+
+/* ── Settings ── */
+.dark .settings-nav-item { color: #94a3b8 !important; }
+.dark .settings-nav-item:hover { background: rgba(255,255,255,0.05) !important; color: #f8fafc !important; }
+.dark .settings-nav-item.active { color: var(--primary-color) !important; background: rgba(239, 68, 68, 0.1) !important; }
+.dark .settings-nav-title { color: #64748b !important; }
+.dark .settings-section-header { border-bottom-color: rgba(255,255,255,0.08) !important; }
+.dark .settings-section-header h3 { color: #f8fafc !important; }
+.dark .setting-row { border-bottom-color: rgba(255,255,255,0.05) !important; }
+.dark .setting-label { color: #f8fafc !important; }
+.dark .setting-desc { color: #64748b !important; }
+.dark .theme-btn { border-color: rgba(255,255,255,0.1) !important; color: #94a3b8 !important; }
+.dark .theme-btn:hover { background: rgba(255,255,255,0.05) !important; color: #f8fafc !important; }
+.dark .theme-btn.active { background: rgba(239, 68, 68, 0.15) !important; color: var(--primary-color) !important; border-color: var(--primary-color) !important; }
+.dark .settings-select {
+  background: rgba(17,24,39,0.8) !important;
+  border-color: rgba(255,255,255,0.1) !important;
+  color: #f8fafc !important;
+}
+.dark .settings-select option { background: #0f172a; color: #f8fafc; }
+.dark .settings-reset-btn { border-color: rgba(255,255,255,0.1) !important; color: #94a3b8 !important; }
+.dark .settings-reset-btn:hover { border-color: #f8fafc !important; color: #f8fafc !important; }
+.dark .settings-link-btn { color: var(--primary-color) !important; }
+.dark .settings-link-btn:hover { background: rgba(56,189,248,0.1) !important; }
+.dark .settings-link-btn.danger { color: #f43f5e !important; }
+.dark .settings-link-btn.danger:hover { background: rgba(244,63,94,0.1) !important; }
+
+/* ── Toggle Switch ── */
+.dark .toggle-slider { background: rgba(255,255,255,0.12) !important; }
+.dark .toggle-slider::before { background: #94a3b8 !important; }
+.dark input:checked + .toggle-slider { background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)) !important; }
+.dark input:checked + .toggle-slider::before { background: #ffffff !important; }
+
+/* ── Icon buttons in header ── */
+.dark .icon-btn { background: rgba(17,24,39,0.7) !important; border-color: rgba(255,255,255,0.08) !important; color: #94a3b8 !important; }
+.dark .icon-btn:hover { background: rgba(31,41,55,0.8) !important; color: #f8fafc !important; }
+
+/* ── Search bar ── */
+.dark .search-bar { background: rgba(17,24,39,0.7) !important; border-color: rgba(255,255,255,0.08) !important; }
+.dark .search-bar input { color: #f8fafc !important; }
+.dark .search-bar input::placeholder { color: #475569 !important; }
+.dark .search-bar:focus-within { box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.25) !important; border-color: var(--primary-color) !important; }
+
+/* ── Color swatch active border ── */
+.dark .color-swatch.active { border-color: #f8fafc !important; }
+
+/* ── Disable overly aggressive transitions on animated items ── */
+.fade-in, .orb, .orb-1, .orb-2, .orb-3 {
+  transition: none !important;
+}

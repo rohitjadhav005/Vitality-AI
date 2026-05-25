@@ -1,0 +1,10 @@
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "framework": "vite",
+  "installCommand": "npm install",
+  "env": {
+    "VITE_API_URL": "https://vitality-api.onrender.com"
+  },
+  "rewrites": [{ "source": "/((?!assets/).*)", "destination": "/index.html" }]
+}

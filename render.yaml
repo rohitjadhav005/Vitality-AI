@@ -1,0 +1,24 @@
+# Deploy backend: https://dashboard.render.com → New → Blueprint → connect Vitality-AI repo
+services:
+  - type: web
+    name: vitality-api
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt && python scripts/build_model.py
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: SECRET_KEY
+        generateValue: true
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: DATABASE_URL
+        fromDatabase:
+          name: vitality-db
+          property: connectionString
+
+databases:
+  - name: vitality-db
+    plan: free
