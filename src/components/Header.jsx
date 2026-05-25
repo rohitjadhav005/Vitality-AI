@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Bell, Search, Menu, ChevronRight, Settings, LogOut, User } from 'lucide-react';
+import { Bell, Search, Menu, ChevronRight, Settings, LogOut, User, X } from 'lucide-react';
 import { useAuth } from './AuthContext';
 
 const pageMeta = {
@@ -21,6 +21,7 @@ const Header = ({ setIsCollapsed, isCollapsed }) => {
   const [query, setQuery] = useState('');
   const [showResults, setShowResults] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
+  const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false);
   const searchRef = useRef(null);
   const profileRef = useRef(null);
   const { logout, token } = useAuth();
@@ -37,7 +38,10 @@ const Header = ({ setIsCollapsed, isCollapsed }) => {
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (searchRef.current && !searchRef.current.contains(event.target)) {
+      const isMobileOverlayClick = event.target.closest('.mobile-search-overlay');
+      const isDesktopSearchClick = searchRef.current && searchRef.current.contains(event.target);
+      
+      if (!isMobileOverlayClick && !isDesktopSearchClick) {
         setShowResults(false);
       }
       if (profileRef.current && !profileRef.current.contains(event.target)) {
@@ -64,6 +68,7 @@ const Header = ({ setIsCollapsed, isCollapsed }) => {
     navigate(path);
     setQuery('');
     setShowResults(false);
+    setIsMobileSearchOpen(false);
   };
 
   const handleLogout = () => {
@@ -73,6 +78,130 @@ const Header = ({ setIsCollapsed, isCollapsed }) => {
 
   return (
     <header className="header-top">
+      {/* Mobile Search Overlay */}
+      {isMobileSearchOpen && (
+        <div className="mobile-search-overlay fade-in" style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background: 'var(--sidebar-bg)',
+          display: 'flex',
+          alignItems: 'center',
+          padding: '0 1rem',
+          gap: '0.8rem',
+          zIndex: 101,
+          borderBottom: '1px solid var(--glass-border)',
+          borderRadius: 'inherit'
+        }}>
+          <button 
+            className="icon-btn" 
+            onClick={() => { 
+              setIsMobileSearchOpen(false); 
+              setQuery(''); 
+              setShowResults(false);
+            }}
+            style={{
+              background: 'transparent',
+              border: 'none',
+              color: 'var(--text-primary)',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              padding: '0.5rem'
+            }}
+          >
+            <X size={20} />
+          </button>
+          
+          <div className="search-bar" style={{ 
+            flex: 1, 
+            display: 'flex', 
+            alignItems: 'center', 
+            gap: '0.6rem', 
+            background: 'var(--glass-hover)', 
+            border: '1px solid var(--glass-border)', 
+            padding: '0.6rem 1.2rem', 
+            borderRadius: '9999px' 
+          }}>
+            <Search size={16} color="var(--text-secondary)" />
+            <input 
+              type="text" 
+              placeholder="Search anything..." 
+              autoFocus
+              value={query}
+              onChange={(e) => {
+                setQuery(e.target.value);
+                setShowResults(true);
+              }}
+              style={{
+                background: 'transparent',
+                border: 'none',
+                color: 'var(--text-primary)',
+                outline: 'none',
+                width: '100%',
+                fontSize: '0.95rem'
+              }}
+            />
+          </div>
+
+          {showResults && query.trim() !== '' && (
+            <div className="search-results-dropdown glass-card fade-in" style={{
+              position: 'absolute',
+              top: '100%',
+              left: '1rem',
+              right: '1rem',
+              background: 'var(--glass-bg)',
+              border: '1px solid var(--glass-border)',
+              borderRadius: '16px',
+              padding: '0.5rem',
+              boxShadow: '0 10px 40px rgba(0,0,0,0.5)',
+              zIndex: 102,
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '0.2rem',
+              maxHeight: '70vh',
+              overflowY: 'auto'
+            }}>
+              {searchResults.length > 0 ? searchResults.map(([path, data]) => (
+                <button 
+                  key={path}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    width: '100%',
+                    padding: '0.8rem 1rem',
+                    background: 'transparent',
+                    border: 'none',
+                    borderRadius: '12px',
+                    color: 'var(--text-primary)',
+                    cursor: 'pointer',
+                    textAlign: 'left',
+                    transition: 'background 0.2s'
+                  }}
+                  onMouseEnter={(e) => e.currentTarget.style.background = 'var(--glass-hover)'}
+                  onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
+                  onClick={() => handleSelect(path)}
+                >
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <div style={{ fontWeight: 600, fontSize: '0.95rem' }}>{data.title}</div>
+                    <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', marginTop: '0.2rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{data.subtitle}</div>
+                  </div>
+                  <ChevronRight size={16} color="var(--text-secondary)" style={{ flexShrink: 0, marginLeft: '0.5rem' }} />
+                </button>
+              )) : (
+                <div style={{ padding: '1.5rem 1rem', textAlign: 'center', color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
+                  No pages found for "{query}"
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      )}
+
       <div className="header-main-row">
         {/* Left: Hamburger + Title */}
         <div className="header-left">
@@ -155,6 +284,10 @@ const Header = ({ setIsCollapsed, isCollapsed }) => {
               </div>
             )}
           </div>
+
+          <button className="icon-btn mobile-only-flex" id="mobile-search-btn" onClick={() => setIsMobileSearchOpen(true)}>
+            <Search size={18} />
+          </button>
 
           <button className="icon-btn" id="notifications-btn" onClick={() => navigate('/notifications')}>
             <Bell size={18} />

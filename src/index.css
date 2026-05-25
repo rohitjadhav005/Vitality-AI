@@ -1014,3 +1014,15 @@ input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.1); }
     transform: translateY(0);
   }
 }
+
+/* Mobile Search Icon & Responsiveness Utility */
+.mobile-only-flex {
+  display: none !important;
+}
+
+@media (max-width: 768px) {
+  .mobile-only-flex {
+    display: flex !important;
+  }
+}
+
