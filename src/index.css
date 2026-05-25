@@ -1426,9 +1426,7 @@ input[type=range]::-webkit-slider-thumb:hover {
   /* Elegant spacing gap below search bar */
   left: 0 !important;
   right: 0 !important;
-  background: var(--glass-bg);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
+  background: #ffffff;
   border: 1px solid var(--glass-border);
   border-radius: 16px;
   padding: 0.5rem;

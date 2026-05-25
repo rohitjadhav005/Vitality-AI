@@ -133,6 +133,7 @@
 .dark .search-bar input { color: #f8fafc !important; }
 .dark .search-bar input::placeholder { color: #475569 !important; }
 .dark .search-bar:focus-within { box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.25) !important; border-color: var(--primary-color) !important; }
+.dark .search-results-dropdown { background: #0f172a !important; border-color: rgba(255,255,255,0.1) !important; }
 
 /* ── Color swatch active border ── */
 .dark .color-swatch.active { border-color: #f8fafc !important; }
