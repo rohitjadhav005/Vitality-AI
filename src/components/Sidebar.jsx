@@ -88,7 +88,7 @@ const Sidebar = ({ isCollapsed = true, setIsCollapsed }) => {
           className="mobile-hamburger"
           onClick={() => setIsCollapsed(true)}
           aria-label="Close menu"
-          style={{ color: 'var(--text-secondary)' }}
+          style={{ color: 'var(--text-secondary)', marginLeft: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
         >
           <X size={24} />
         </button>
@@ -146,6 +146,8 @@ const Sidebar = ({ isCollapsed = true, setIsCollapsed }) => {
             </NavLink>
           ))}
 
+          <div style={{ height: '1px', background: 'rgba(255, 255, 255, 0.08)', margin: '1rem 0 0.5rem 0' }} />
+
           {/* Profile Card */}
           <div 
             className="sidebar-profile-card" 
@@ -154,7 +156,7 @@ const Sidebar = ({ isCollapsed = true, setIsCollapsed }) => {
               handleNavClick();
             }}
             data-tooltip={isCollapsed ? username : undefined}
-            style={isCollapsed ? { paddingLeft: 0, paddingRight: 0, justifyContent: 'center' } : {}}
+            style={isCollapsed ? { paddingLeft: 0, paddingRight: 0, justifyContent: 'center', marginTop: 0 } : { marginTop: 0, padding: '0.6rem 0.8rem' }}
           >
             <div className="sidebar-profile-avatar">
               <img
@@ -165,28 +167,34 @@ const Sidebar = ({ isCollapsed = true, setIsCollapsed }) => {
             {!isCollapsed && (
               <div className="sidebar-profile-info">
                 <div className="sidebar-profile-name">{username}</div>
-                <div className="sidebar-profile-role">Health Member</div>
+                <div className="sidebar-profile-role" style={{ fontSize: '0.7rem', color: '#94A3B8' }}>Health Member</div>
               </div>
             )}
-            {!isCollapsed && <ChevronRight size={16} className="profile-chevron" />}
+            {!isCollapsed && (
+              <button 
+                onClick={(e) => { 
+                  e.stopPropagation(); 
+                  handleLogout(); 
+                }}
+                title="Sign Out"
+                style={{
+                  background: 'none', border: 'none', color: '#94a3b8', cursor: 'pointer', padding: '0.4rem',
+                  borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginLeft: 'auto',
+                  transition: 'all 0.2s ease'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.color = '#ef4444';
+                  e.currentTarget.style.background = 'rgba(239, 68, 68, 0.1)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.color = '#94a3b8';
+                  e.currentTarget.style.background = 'none';
+                }}
+              >
+                <LogOut size={18} />
+              </button>
+            )}
           </div>
-
-          {/* Logout Button */}
-          <motion.button
-            whileHover={{ scale: 1.03, backgroundColor: 'rgba(239, 68, 68, 0.12)' }}
-            whileTap={{ scale: 0.97 }}
-            onClick={handleLogout}
-            data-tooltip={isCollapsed ? "Sign Out" : undefined}
-            style={{
-              display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px',
-              width: '100%', padding: isCollapsed ? '10px 0' : '10px 14px', marginTop: '8px',
-              background: 'rgba(239, 68, 68, 0.06)', border: '1px solid rgba(239, 68, 68, 0.2)',
-              borderRadius: '16px', color: 'var(--primary-color)', cursor: 'pointer'
-            }}
-          >
-            <LogOut size={18} />
-            {!isCollapsed && <span style={{ fontWeight: 600, fontSize: '0.9rem' }}>Sign Out</span>}
-          </motion.button>
         </div>
       </div>
     </aside>
