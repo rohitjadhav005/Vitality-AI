@@ -170,7 +170,7 @@ const Header = ({ setIsCollapsed, isCollapsed }) => {
                 width: '40px',
                 height: '40px',
                 borderRadius: '50%',
-                background: 'linear-gradient(135deg, #10B981, #059669)',
+                background: 'linear-gradient(135deg, var(--primary-color), #b91c1c)',
                 border: 'none',
                 display: 'flex',
                 alignItems: 'center',
@@ -195,7 +195,7 @@ const Header = ({ setIsCollapsed, isCollapsed }) => {
                 top: 'calc(100% + 12px)',
                 right: 0,
                 minWidth: '240px',
-                background: 'var(--sidebar-bg)',
+                background: 'var(--glass-bg)',
                 border: '1px solid var(--glass-border)',
                 borderRadius: '16px',
                 padding: '0.8rem',
@@ -206,7 +206,7 @@ const Header = ({ setIsCollapsed, isCollapsed }) => {
               }}>
                 <div style={{ padding: '0.5rem 0.5rem 1rem 0.5rem', display: 'flex', alignItems: 'center', gap: '0.8rem', borderBottom: '1px solid rgba(255, 255, 255, 0.08)', marginBottom: '0.5rem' }}>
                   <div style={{
-                    width: '36px', height: '36px', borderRadius: '50%', background: 'linear-gradient(135deg, #10B981, #059669)',
+                    width: '36px', height: '36px', borderRadius: '50%', background: 'linear-gradient(135deg, var(--primary-color), #b91c1c)',
                     display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: 700, fontSize: '0.9rem', textTransform: 'uppercase'
                   }}>
                     {username.charAt(0)}
