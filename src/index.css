@@ -51,7 +51,7 @@ html {
   --bg-color: #F8FAFC;
   /* Light gray background */
 
-  --sidebar-bg: rgba(255, 255, 255, 0.85);
+  --sidebar-bg: rgba(255, 255, 255, 0.983);
   /* Translucent white card with higher intensity */
   --menu-active-bg: rgba(239, 68, 68, 0.1);
   /* Red tint for active menu */
@@ -84,7 +84,7 @@ html {
   --primary-color: #EF4444;
   --secondary-color: #DC2626;
   --bg-color: #0A0A0A;
-  --sidebar-bg: rgba(17, 24, 39, 0.981);
+  --sidebar-bg: rgba(17, 24, 39, 0.983);
   /* Translucent dark card with higher intensity */
   --menu-active-bg: rgba(239, 68, 68, 0.1);
 
