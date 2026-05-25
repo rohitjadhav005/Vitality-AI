@@ -39,12 +39,12 @@
 .dark .filter-tab:hover { background: rgba(255,255,255,0.05) !important; color: #f8fafc !important; }
 
 /* ── Goals ── */
-.dark .goal-card { background: rgba(17, 24, 39, 0.8) !important; border: 1px solid rgba(255,255,255,0.08) !important; }
-.dark .goal-progress-bar-bg { background: rgba(255,255,255,0.08) !important; }
-.dark .modal-overlay { background: rgba(0,0,0,0.75) !important; }
-.dark .modal-box { background: #0f172a !important; border: 1px solid rgba(255,255,255,0.1) !important; }
-.dark .modal-input { background: rgba(255,255,255,0.05) !important; border-color: rgba(255,255,255,0.1) !important; color: #f8fafc !important; }
-.dark .modal-cancel { border-color: rgba(255,255,255,0.1) !important; color: #94a3b8 !important; }
+.dark .goal-card-pro { background: rgba(17, 24, 39, 0.75) !important; border: 1px solid rgba(255, 255, 255, 0.08) !important; }
+.dark .goal-progress-bar-bg { background: rgba(255, 255, 255, 0.08) !important; }
+.dark .modal-overlay { background: rgba(5, 7, 15, 0.75) !important; }
+.dark .modal-box { background: rgba(15, 23, 42, 0.95) !important; border: 1px solid rgba(255, 255, 255, 0.1) !important; }
+.dark .modal-input { background: rgba(255, 255, 255, 0.04) !important; border-color: rgba(255, 255, 255, 0.08) !important; color: #f8fafc !important; }
+.dark .modal-cancel { border-color: rgba(255, 255, 255, 0.1) !important; color: #94a3b8 !important; }
 .dark .modal-cancel:hover { border-color: #f8fafc !important; color: #f8fafc !important; }
 
 /* ── Notifications ── */
