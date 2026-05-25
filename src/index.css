@@ -42,7 +42,7 @@ html {
   --secondary-color: #DC2626; /* Hover Red */
   --bg-color: #F8FAFC; /* Light gray background */
   
-  --sidebar-bg: rgba(255, 255, 255, 0.6); /* Translucent white card */
+  --sidebar-bg: rgba(255, 255, 255, 0.85); /* Translucent white card with higher intensity */
   --menu-active-bg: rgba(239, 68, 68, 0.1); /* Red tint for active menu */
   
   /* Cards and UI elements */
@@ -70,7 +70,7 @@ html {
   --primary-color: #EF4444; 
   --secondary-color: #DC2626; 
   --bg-color: #0A0A0A; 
-  --sidebar-bg: rgba(17, 24, 39, 0.6); 
+  --sidebar-bg: rgba(17, 24, 39, 0.85); /* Translucent dark card with higher intensity */
   --menu-active-bg: rgba(239, 68, 68, 0.1);
   
   --glass-bg: rgba(17, 24, 39, 0.6);
