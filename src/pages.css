@@ -61,19 +61,19 @@
   gap: 0.6rem;
   position: relative;
   overflow: hidden;
-  border-radius: 20px;
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
-  box-shadow: var(--glass-shadow);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .goals-stat-card:hover {
   transform: translateY(-4px);
-  box-shadow: var(--shadow-md);
-  border-color: rgba(239, 68, 68, 0.2);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.06);
+  border-color: rgba(255, 255, 255, 0.9);
 }
 
 .goals-stat-card .stat-icon-box {
@@ -174,20 +174,19 @@
   padding: 1.5rem;
   position: relative;
   overflow: hidden;
-  border-left: 4px solid var(--cat-color) !important;
-  background: var(--glass-bg);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
-  border: 1px solid var(--glass-border);
-  border-radius: 20px;
-  box-shadow: var(--glass-shadow);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 24px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .goal-card-pro:hover {
   transform: translateY(-5px);
-  box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.12), 0 0 20px -3px var(--cat-glow);
-  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.06), 0 0 20px -3px var(--cat-glow);
+  border-color: rgba(255, 255, 255, 0.9);
 }
 
 .goal-card-pro.goal-completed {
@@ -326,13 +325,11 @@
 .modal-box {
   width: 100%;
   max-width: 500px;
-  padding: 2rem;
-  background: var(--glass-bg);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
-  border: 1px solid var(--glass-border);
+  padding: 2.5rem;
+  background: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.8);
   border-radius: 24px;
-  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.5);
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
@@ -390,11 +387,9 @@
 }
 
 .form-row label, .form-row-2col .form-row label {
-  font-size: 0.76rem;
-  font-weight: 700;
-  color: var(--text-secondary);
-  text-transform: uppercase;
-  letter-spacing: 0.75px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #64748B;
 }
 
 .form-row-2col {
@@ -406,26 +401,27 @@
 .modal-input {
   box-sizing: border-box;
   width: 100%;
-  padding: 0.75rem 1rem;
+  padding: 0.85rem 1rem;
   border-radius: 12px;
-  border: 1px solid var(--glass-border);
-  background: var(--glass-hover);
+  border: 1px solid #E2E8F0;
+  background: #F8FAFC;
   color: var(--text-primary);
   font-size: 0.95rem;
+  font-weight: 500;
   outline: none;
   font-family: inherit;
   transition: all 0.25s ease;
 }
 
 .modal-input::placeholder {
-  color: var(--text-secondary);
-  opacity: 0.6;
+  color: #94A3B8;
+  opacity: 0.8;
 }
 
 .modal-input:focus {
   border-color: var(--primary-color);
-  background: var(--glass-bg);
-  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.18);
+  background: #FFFFFF;
+  box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1);
 }
 
 .modal-input option {

@@ -50,14 +50,14 @@ const GoalCard = ({ goal, onDelete, onComplete }) => {
       
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', position: 'relative', zIndex: 1 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
-          <div style={{ background: 'var(--cat-bg)', width: '42px', height: '42px', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-            <Icon size={20} color="var(--cat-color)" />
+          <div style={{ background: 'linear-gradient(135deg, var(--cat-color), var(--cat-glow))', width: '46px', height: '46px', borderRadius: '14px', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, boxShadow: '0 4px 12px var(--cat-bg)' }}>
+            <Icon size={22} color="#ffffff" />
           </div>
           <div>
-            <div style={{ fontSize: '0.68rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.75px', color: 'var(--cat-color)', marginBottom: '0.15rem' }}>
+            <div style={{ fontSize: '0.7rem', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '0.15rem', textTransform: 'capitalize' }}>
               {goal.category}
             </div>
-            <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: 'var(--text-primary)', margin: 0, letterSpacing: '-0.3px' }}>{goal.title}</h3>
+            <h3 style={{ fontSize: '1.15rem', fontWeight: 700, color: 'var(--text-primary)', margin: 0, letterSpacing: '-0.3px' }}>{goal.title}</h3>
           </div>
         </div>
         
