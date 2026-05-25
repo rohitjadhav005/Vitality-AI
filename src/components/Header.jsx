@@ -116,89 +116,59 @@ const Header = ({ setIsCollapsed, isCollapsed }) => {
             <X size={20} />
           </button>
           
-          <div className="search-bar" style={{ 
-            flex: 1, 
-            display: 'flex', 
-            alignItems: 'center', 
-            gap: '0.6rem', 
-            background: 'var(--glass-hover)', 
-            border: '1px solid var(--glass-border)', 
-            padding: '0.6rem 1.2rem', 
-            borderRadius: '9999px' 
-          }}>
-            <Search size={16} color="var(--text-secondary)" />
-            <input 
-              type="text" 
-              placeholder="Search anything..." 
-              autoFocus
-              value={query}
-              onChange={(e) => {
-                setQuery(e.target.value);
-                setShowResults(true);
-              }}
-              style={{
-                background: 'transparent',
-                border: 'none',
-                color: 'var(--text-primary)',
-                outline: 'none',
-                width: '100%',
-                fontSize: '0.95rem'
-              }}
-            />
-          </div>
-
-          {showResults && query.trim() !== '' && (
-            <div className="search-results-dropdown glass-card fade-in" style={{
-              position: 'absolute',
-              top: '100%',
-              left: '1rem',
-              right: '1rem',
-              background: 'var(--glass-bg)',
-              border: '1px solid var(--glass-border)',
-              borderRadius: '16px',
-              padding: '0.5rem',
-              boxShadow: '0 10px 40px rgba(0,0,0,0.5)',
-              zIndex: 102,
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '0.2rem',
-              maxHeight: '70vh',
-              overflowY: 'auto'
+          <div className="search-bar-container" style={{ position: 'relative', flex: 1 }}>
+            <div className="search-bar" style={{ 
+              display: 'flex', 
+              alignItems: 'center', 
+              gap: '0.6rem', 
+              background: 'var(--glass-hover)', 
+              border: '1px solid var(--glass-border)', 
+              padding: '0.6rem 1.2rem', 
+              borderRadius: '9999px' 
             }}>
-              {searchResults.length > 0 ? searchResults.map(([path, data]) => (
-                <button 
-                  key={path}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    width: '100%',
-                    padding: '0.8rem 1rem',
-                    background: 'transparent',
-                    border: 'none',
-                    borderRadius: '12px',
-                    color: 'var(--text-primary)',
-                    cursor: 'pointer',
-                    textAlign: 'left',
-                    transition: 'background 0.2s'
-                  }}
-                  onMouseEnter={(e) => e.currentTarget.style.background = 'var(--glass-hover)'}
-                  onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
-                  onClick={() => handleSelect(path)}
-                >
-                  <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ fontWeight: 600, fontSize: '0.95rem' }}>{data.title}</div>
-                    <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', marginTop: '0.2rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{data.subtitle}</div>
-                  </div>
-                  <ChevronRight size={16} color="var(--text-secondary)" style={{ flexShrink: 0, marginLeft: '0.5rem' }} />
-                </button>
-              )) : (
-                <div style={{ padding: '1.5rem 1rem', textAlign: 'center', color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
-                  No pages found for "{query}"
-                </div>
-              )}
+              <Search size={16} color="var(--text-secondary)" />
+              <input 
+                type="text" 
+                placeholder="Search anything..." 
+                autoFocus
+                value={query}
+                onChange={(e) => {
+                  setQuery(e.target.value);
+                  setShowResults(true);
+                }}
+                style={{
+                  background: 'transparent',
+                  border: 'none',
+                  color: 'var(--text-primary)',
+                  outline: 'none',
+                  width: '100%',
+                  fontSize: '0.95rem'
+                }}
+              />
             </div>
-          )}
+
+            {showResults && query.trim() !== '' && (
+              <div className="search-results-dropdown glass-card">
+                {searchResults.length > 0 ? searchResults.map(([path, data]) => (
+                  <button 
+                    key={path}
+                    className="search-result-item"
+                    onClick={() => handleSelect(path)}
+                  >
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <div style={{ fontWeight: 600, fontSize: '0.95rem' }}>{data.title}</div>
+                      <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', marginTop: '0.2rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{data.subtitle}</div>
+                    </div>
+                    <ChevronRight size={16} color="var(--text-secondary)" style={{ flexShrink: 0, marginLeft: '0.5rem' }} />
+                  </button>
+                )) : (
+                  <div style={{ padding: '1.5rem 1rem', textAlign: 'center', color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
+                    No pages found for "{query}"
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
         </div>
       )}
 
@@ -233,41 +203,11 @@ const Header = ({ setIsCollapsed, isCollapsed }) => {
             </div>
 
             {showResults && query.trim() !== '' && (
-              <div className="search-results-dropdown glass-card fade-in" style={{
-                position: 'absolute',
-                top: 'calc(100% + 10px)',
-                left: 0,
-                right: 0,
-                minWidth: '280px',
-                background: 'var(--glass-bg)',
-                border: '1px solid var(--glass-border)',
-                borderRadius: '16px',
-                padding: '0.5rem',
-                boxShadow: '0 10px 40px rgba(0,0,0,0.5)',
-                zIndex: 100,
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '0.2rem'
-              }}>
+              <div className="search-results-dropdown glass-card">
                 {searchResults.length > 0 ? searchResults.map(([path, data]) => (
                   <button 
                     key={path}
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'space-between',
-                      width: '100%',
-                      padding: '0.8rem 1rem',
-                      background: 'transparent',
-                      border: 'none',
-                      borderRadius: '12px',
-                      color: 'var(--text-primary)',
-                      cursor: 'pointer',
-                      textAlign: 'left',
-                      transition: 'background 0.2s'
-                    }}
-                    onMouseEnter={(e) => e.currentTarget.style.background = 'var(--glass-hover)'}
-                    onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
+                    className="search-result-item"
                     onClick={() => handleSelect(path)}
                   >
                     <div style={{ flex: 1, minWidth: 0 }}>
