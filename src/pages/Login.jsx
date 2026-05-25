@@ -105,8 +105,8 @@ const Login = () => {
       <div className="login-right-panel">
         <div className="login-form-card">
           <div className="login-form-header">
-            <h2>{isRegister ? 'Create Account' : 'Welcome Back'}</h2>
-            <p>{isRegister ? 'Start your wellness journey today' : 'Sign in to your Vitality AI dashboard'}</p>
+            <h2>{isRegister ? 'Join Vitality AI ✨' : 'Welcome Back! 👋'}</h2>
+            <p>{isRegister ? 'Create an account to start tracking your peak performance.' : "We're glad to see you again. Sign in to continue."}</p>
           </div>
 
           <form onSubmit={handleSubmit} className="login-form">
