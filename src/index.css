@@ -62,10 +62,8 @@ html {
   /* Stronger blur like macOS / visionOS */
   --glass-blur: blur(40px) saturate(180%);
 
-  /* Layered shadows */
+  /* Layered shadows - removed outer shadows for flatter glass look */
   --glass-shadow:
-    0 2px 4px rgba(0, 0, 0, 0.04),
-    0 8px 24px rgba(0, 0, 0, 0.06),
     0 1px 0 rgba(255, 255, 255, 0.8) inset;
 
   /* Text */
@@ -110,9 +108,8 @@ html {
 
   --glass-blur: blur(48px) saturate(200%);
 
+  /* Layered shadows - removed outer shadows for flatter glass look */
   --glass-shadow:
-    0 2px 4px rgba(0, 0, 0, 0.30),
-    0 12px 40px rgba(0, 0, 0, 0.40),
     0 1px 0 rgba(255, 255, 255, 0.04) inset;
 
   --text-primary: #F1F5F9;
@@ -512,7 +509,7 @@ body::after {
 
 .glass-card:hover {
   transform: translateY(-3px);
-  box-shadow: var(--shadow-lg);
+  /* shadow removed for flat aesthetic */
 }
 
 .metric-header {

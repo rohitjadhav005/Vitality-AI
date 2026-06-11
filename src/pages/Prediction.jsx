@@ -369,19 +369,17 @@ const Prediction = () => {
             justifyContent: 'center',
             alignItems: 'center',
             gap: '10px',
-            transition: 'transform 0.2s, box-shadow 0.2s, background 0.4s',
+            transition: 'transform 0.2s, background 0.4s',
             position: 'relative',
             overflow: 'hidden',
           }}
           onMouseOver={(e) => {
             if (!loading) {
               e.currentTarget.style.transform = 'translateY(-3px) scale(1.01)';
-              e.currentTarget.style.boxShadow = '0 14px 28px rgba(239, 68, 68, 0.45)';
             }
           }}
           onMouseOut={(e) => {
             e.currentTarget.style.transform = 'translateY(0) scale(1)';
-            e.currentTarget.style.boxShadow = '0 8px 20px rgba(239, 68, 68, 0.3)';
           }}
         >
           {loading

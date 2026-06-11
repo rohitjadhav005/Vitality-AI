@@ -6,7 +6,7 @@ import { useRealtime } from '../hooks/useRealtime';
 import { useAuth } from '../components/AuthContext';
 
 const MetricCard = ({ title, value, icon: Icon, trend }) => (
-  <div className="metric-card glass-card" style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1rem', minWidth: '220px', flex: '0 0 auto', scrollSnapAlign: 'start', transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)', border: '1px solid var(--glass-border)' }} onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.08)'; e.currentTarget.style.borderColor = 'rgba(239, 68, 68, 0.15)'; }} onMouseLeave={e => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = 'var(--glass-shadow)'; e.currentTarget.style.borderColor = 'var(--glass-border)'; }}>
+  <div className="metric-card glass-card" style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1rem', minWidth: '220px', flex: '0 0 auto', scrollSnapAlign: 'start', transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)', border: '1px solid var(--glass-border)' }} onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.borderColor = 'rgba(239, 68, 68, 0.15)'; }} onMouseLeave={e => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.borderColor = 'var(--glass-border)'; }}>
     <div className="metric-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
       <div className="metric-icon" style={{ background: 'rgba(239, 68, 68, 0.1)', color: 'var(--primary-color)', padding: '0.6rem', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <Icon size={20} />
