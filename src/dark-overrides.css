@@ -9,60 +9,94 @@
 }
 
 /* ── Sidebar ── */
-.dark .sidebar { background: var(--sidebar-bg) !important; border-right: 1px solid rgba(255,255,255,0.08) !important; }
+.dark .sidebar {
+  background: var(--sidebar-bg) !important;
+  border-right: 1px solid rgba(255,255,255,0.07) !important;
+  box-shadow: 1px 0 0 rgba(255,255,255,0.04), 4px 0 32px rgba(0,0,0,0.30) !important;
+}
 .dark .menu-item.active { background: var(--menu-active-bg) !important; }
+.dark .menu-item:hover  { background: rgba(255,255,255,0.05) !important; }
 
 /* ── Cards / Glass Elements ── */
-.dark .insight-item { background: rgba(255,255,255,0.02) !important; border-color: rgba(255,255,255,0.08) !important; }
+.dark .insight-item {
+  background: var(--glass-surface) !important;
+  border-color: rgba(255,255,255,0.07) !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3) !important;
+}
+.dark .glass-card {
+  outline-color: rgba(255,255,255,0.04) !important;
+}
 .dark .metric-trend { background: rgba(255,255,255,0.05) !important; }
-.dark .metric-icon { background: rgba(16, 185, 129, 0.1) !important; }
-.dark input[type=range]::-webkit-slider-runnable-track { background: rgba(255,255,255,0.1) !important; }
+.dark .metric-icon { background: rgba(16, 185, 129, 0.10) !important; }
+.dark input[type=range]::-webkit-slider-runnable-track { background: rgba(255,255,255,0.10) !important; }
 .dark input[type=range]::-webkit-slider-thumb { background: #1e293b !important; }
-.dark .placeholder-content { background: rgba(255,255,255,0.02) !important; border-color: rgba(255,255,255,0.1) !important; }
-.dark .score-bar-bg { background: rgba(255,255,255,0.1) !important; }
+.dark .placeholder-content { background: rgba(255,255,255,0.02) !important; border-color: rgba(255,255,255,0.07) !important; }
+.dark .score-bar-bg { background: rgba(255,255,255,0.10) !important; }
 
 /* ── Profile Dropdown & Header ── */
 .dark .profile-dropdown {
-  background: rgba(15, 23, 42, 0.97) !important;
-  border-color: rgba(255,255,255,0.1) !important;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.5) !important;
+  background: rgba(12, 18, 34, 0.98) !important;
+  backdrop-filter: blur(40px) saturate(160%) !important;
+  -webkit-backdrop-filter: blur(40px) saturate(160%) !important;
+  border-color: rgba(255,255,255,0.08) !important;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.6), 0 0 0 0.5px rgba(255,255,255,0.05) !important;
 }
-.dark .header-profile-name, .dark .dropdown-name { color: #f8fafc !important; }
+.dark .header-profile-name, .dark .dropdown-name { color: #f1f5f9 !important; }
 .dark .dropdown-item { color: #cbd5e1 !important; }
-.dark .dropdown-item:hover { background: rgba(255,255,255,0.05) !important; color: #f8fafc !important; }
-.dark .dropdown-divider { border-top-color: rgba(255,255,255,0.08) !important; }
-.dark .header-profile-btn { background: rgba(17, 24, 39, 0.8) !important; border-color: rgba(255,255,255,0.08) !important; }
-.dark .header-profile-btn:hover { background: rgba(31, 41, 55, 0.8) !important; }
+.dark .dropdown-item:hover { background: rgba(255,255,255,0.06) !important; color: #f1f5f9 !important; }
+.dark .dropdown-divider { border-top-color: rgba(255,255,255,0.07) !important; }
+.dark .header-profile-btn { background: rgba(16,22,38,0.85) !important; border-color: rgba(255,255,255,0.07) !important; backdrop-filter: blur(20px) !important; }
+.dark .header-profile-btn:hover { background: rgba(24,32,52,0.9) !important; }
 
 /* ── Filter Tabs ── */
 .dark .filter-tab { border-color: rgba(255,255,255,0.1) !important; color: #94a3b8 !important; }
 .dark .filter-tab:hover { background: rgba(255,255,255,0.05) !important; color: #f8fafc !important; }
 
 /* ── Goals ── */
-.dark .goals-stat-card { background: rgba(15, 23, 42, 0.95) !important; border-color: rgba(255, 255, 255, 0.08) !important; }
-.dark .goal-card-pro { background: rgba(15, 23, 42, 0.95) !important; border: 1px solid rgba(255, 255, 255, 0.08) !important; }
+.dark .goals-stat-card {
+  background: var(--glass-surface) !important;
+  border-color: rgba(255,255,255,0.07) !important;
+  backdrop-filter: blur(32px) !important;
+}
+.dark .goal-card-pro {
+  background: var(--glass-surface) !important;
+  border: 1px solid rgba(255,255,255,0.07) !important;
+}
 .dark .goal-progress-bar-bg { background: rgba(255, 255, 255, 0.08) !important; }
-.dark .modal-overlay { background: rgba(5, 7, 15, 0.75) !important; }
-.dark .modal-box { background: rgba(15, 23, 42, 0.98) !important; border: 1px solid rgba(255, 255, 255, 0.1) !important; box-shadow: 0 24px 70px rgba(0, 0, 0, 0.5) !important; }
-.dark .modal-input { background: rgba(30, 41, 59, 0.5) !important; border-color: rgba(255, 255, 255, 0.08) !important; color: #f8fafc !important; }
-.dark .modal-cancel { border-color: rgba(255, 255, 255, 0.1) !important; color: #94a3b8 !important; }
-.dark .modal-cancel:hover { border-color: #f8fafc !important; color: #f8fafc !important; }
-.dark .form-row label, .dark .form-row-2col .form-row label { color: #94A3B8 !important; }
+.dark .modal-overlay { background: rgba(4, 5, 10, 0.80) !important; backdrop-filter: blur(8px) !important; }
+.dark .modal-box {
+  background: rgba(12, 18, 34, 0.97) !important;
+  border: 1px solid rgba(255,255,255,0.09) !important;
+  box-shadow: 0 32px 80px rgba(0,0,0,0.65), 0 0 0 0.5px rgba(255,255,255,0.06) !important;
+  backdrop-filter: blur(40px) !important;
+}
+.dark .modal-input {
+  background: rgba(24, 32, 52, 0.7) !important;
+  border-color: rgba(255,255,255,0.08) !important;
+  color: #f1f5f9 !important;
+}
+.dark .modal-cancel { border-color: rgba(255,255,255,0.09) !important; color: #8892a4 !important; }
+.dark .modal-cancel:hover { border-color: #f1f5f9 !important; color: #f1f5f9 !important; }
+.dark .form-row label, .dark .form-row-2col .form-row label { color: #8892A4 !important; }
 
 /* ── Notifications ── */
-.dark .notif-item { background: rgba(17,24,39,0.4) !important; border: 1px solid rgba(255,255,255,0.05) !important; }
-.dark .bulk-btn { border-color: rgba(255,255,255,0.1) !important; color: #94a3b8 !important; }
-.dark .bulk-btn:hover { background: rgba(255,255,255,0.05) !important; color: #f8fafc !important; }
+.dark .notif-item {
+  background: var(--glass-surface) !important;
+  border: 1px solid rgba(255,255,255,0.06) !important;
+  backdrop-filter: blur(20px) !important;
+}
+.dark .bulk-btn { border-color: rgba(255,255,255,0.08) !important; color: #8892a4 !important; }
+.dark .bulk-btn:hover { background: rgba(255,255,255,0.05) !important; color: #f1f5f9 !important; }
 
 /* ── History ── */
-.dark .history-export-btn { border-color: rgba(255,255,255,0.1) !important; color: #94a3b8 !important; }
-.dark .history-export-btn:hover { background: rgba(255,255,255,0.05) !important; color: #f8fafc !important; }
-.dark .history-search-input { color: #f8fafc !important; }
-.dark .history-table-pro thead th { border-bottom-color: rgba(255,255,255,0.08) !important; color: #94a3b8 !important; }
-.dark .history-table-pro tbody tr { border-bottom-color: rgba(255,255,255,0.05) !important; }
+.dark .history-export-btn { border-color: rgba(255,255,255,0.08) !important; color: #8892a4 !important; }
+.dark .history-export-btn:hover { background: rgba(255,255,255,0.05) !important; color: #f1f5f9 !important; }
+.dark .history-search-input { color: #f1f5f9 !important; }
+.dark .history-table-pro thead th { border-bottom-color: rgba(255,255,255,0.07) !important; color: #8892a4 !important; }
+.dark .history-table-pro tbody tr { border-bottom-color: rgba(255,255,255,0.04) !important; }
 .dark .history-table-pro tbody tr:hover, .dark .selected-row { background: rgba(255,255,255,0.04) !important; }
 .dark .detail-chip { background: rgba(255,255,255,0.05) !important; }
-.dark .detail-chip strong { color: #f8fafc !important; }
+.dark .detail-chip strong { color: #f1f5f9 !important; }
 .dark .mini-bar-bg { background: rgba(255,255,255,0.08) !important; }
 .dark .unit-label, .dark .date-cell { color: #64748b !important; }
 .dark .detail-expand-row td { background: rgba(239, 68, 68, 0.06) !important; }
@@ -125,15 +159,28 @@
 .dark input:checked + .toggle-slider::before { background: #ffffff !important; }
 
 /* ── Icon buttons in header ── */
-.dark .icon-btn { background: rgba(17,24,39,0.7) !important; border-color: rgba(255,255,255,0.08) !important; color: #94a3b8 !important; }
-.dark .icon-btn:hover { background: rgba(31,41,55,0.8) !important; color: #f8fafc !important; }
+.dark .icon-btn {
+  background: var(--glass-surface) !important;
+  border-color: rgba(255,255,255,0.07) !important;
+  color: #8892a4 !important;
+  backdrop-filter: blur(20px) !important;
+}
+.dark .icon-btn:hover { background: rgba(255,255,255,0.08) !important; color: #f1f5f9 !important; }
 
 /* ── Search bar ── */
-.dark .search-bar { background: rgba(17,24,39,0.7) !important; border-color: rgba(255,255,255,0.08) !important; }
-.dark .search-bar input { color: #f8fafc !important; }
+.dark .search-bar {
+  background: rgba(16,22,38,0.75) !important;
+  border-color: rgba(255,255,255,0.07) !important;
+  backdrop-filter: blur(20px) !important;
+}
+.dark .search-bar input { color: #f1f5f9 !important; }
 .dark .search-bar input::placeholder { color: #475569 !important; }
-.dark .search-bar:focus-within { box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.25) !important; border-color: var(--primary-color) !important; }
-.dark .search-results-dropdown { background: #0f172a !important; border-color: rgba(255,255,255,0.1) !important; }
+.dark .search-bar:focus-within { box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.28) !important; border-color: var(--primary-color) !important; }
+.dark .search-results-dropdown {
+  background: rgba(12,18,34,0.98) !important;
+  border-color: rgba(255,255,255,0.08) !important;
+  backdrop-filter: blur(40px) !important;
+}
 
 /* ── Color swatch active border ── */
 .dark .color-swatch.active { border-color: #f8fafc !important; }
