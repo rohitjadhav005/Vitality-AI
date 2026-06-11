@@ -54,10 +54,10 @@ const EmojiSelector = ({ value, onChange, name, max = 10, reversed = false }) =>
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <span style={{ display: 'flex', color: currentEmoji.color, transition: 'color 0.2s' }}>
+        <span className="emoji-icon-animated" style={{ display: 'flex', color: currentEmoji.color, transition: 'color 0.3s' }}>
           {currentEmoji.icon}
         </span>
-        <span style={{ fontWeight: 800, fontSize: '1.1rem', color: currentEmoji.color }}>
+        <span style={{ fontWeight: 800, fontSize: '1.1rem', color: currentEmoji.color, transition: 'color 0.3s' }}>
           {value}/10
         </span>
       </div>
@@ -74,7 +74,7 @@ const EmojiSelector = ({ value, onChange, name, max = 10, reversed = false }) =>
 };
 
 const WaterTracker = ({ value, onChange, name }) => {
-  const cups = Array.from({ length: 6 }, (_, i) => i + 1); // Up to 6 Liters
+  const cups = Array.from({ length: 6 }, (_, i) => i + 1);
   
   const handleClick = (cupValue) => {
     onChange({ target: { name, value: cupValue } });
@@ -87,23 +87,25 @@ const WaterTracker = ({ value, onChange, name }) => {
           key={cup}
           type="button"
           onClick={() => handleClick(cup)}
+          className="water-cup-btn"
           style={{
             background: value >= cup ? 'rgba(59, 130, 246, 0.15)' : 'var(--glass-border)',
             border: `1.5px solid ${value >= cup ? '#3b82f6' : 'transparent'}`,
             borderRadius: '10px',
             padding: '6px 4px',
             cursor: 'pointer',
-            transition: 'all 0.2s',
+            transition: 'all 0.25s cubic-bezier(0.34,1.56,0.64,1)',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
             flex: 1,
-            minWidth: '0'
+            minWidth: '0',
+            transform: value >= cup ? 'scale(1.05)' : 'scale(1)',
           }}
         >
-          <Droplets size={16} color={value >= cup ? '#3b82f6' : 'var(--text-secondary)'} style={{ marginBottom: '2px' }} />
-          <span style={{ fontSize: '0.7rem', fontWeight: 700, color: value >= cup ? '#3b82f6' : 'var(--text-secondary)' }}>{cup}L</span>
+          <Droplets size={16} color={value >= cup ? '#3b82f6' : 'var(--text-secondary)'} style={{ marginBottom: '2px', transition: 'color 0.2s' }} />
+          <span style={{ fontSize: '0.7rem', fontWeight: 700, color: value >= cup ? '#3b82f6' : 'var(--text-secondary)', transition: 'color 0.2s' }}>{cup}L</span>
         </button>
       ))}
     </div>
@@ -130,7 +132,8 @@ const SliderWithPresets = ({ value, onChange, name, min, max, step, presets, uni
               fontSize: '0.75rem',
               fontWeight: 600,
               cursor: 'pointer',
-              transition: 'all 0.2s',
+              transition: 'all 0.2s cubic-bezier(0.34,1.56,0.64,1)',
+              transform: value === preset.value ? 'scale(1.06)' : 'scale(1)',
               flex: 1,
               minWidth: '0',
               whiteSpace: 'nowrap',
@@ -162,6 +165,7 @@ const Prediction = () => {
   });
   const [loading, setLoading] = useState(false);
   const [results, setResults] = useState(null);
+  const [resultKey, setResultKey] = useState(0);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -179,31 +183,36 @@ const Prediction = () => {
       });
       if (res.ok) {
         setResults(await res.json());
+        setResultKey(k => k + 1);
       } else {
         throw new Error("Failed to fetch");
       }
     } catch {
-      // Fallback mock logic for testing
       setResults({
         Energy_Score: Math.floor(Math.random() * 20) + 70,
         Productivity_Score: Math.floor(Math.random() * 20) + 70,
       });
+      setResultKey(k => k + 1);
     } finally {
       setLoading(false);
     }
   };
 
-  const renderField = (key, label, icon, content) => {
+  const renderField = (key, label, icon, content, idx) => {
     const warning = getWarning(key, formData[key]);
     return (
-      <div className="pred-field interactive-card" key={key} style={{
-        background: 'var(--glass-bg)',
-        border: '1px solid var(--glass-border)',
-        borderRadius: '16px',
-        padding: '1.2rem',
-        boxShadow: '0 4px 6px rgba(0,0,0,0.05)',
-        transition: 'transform 0.2s ease',
-      }}>
+      <div
+        className="pred-field pred-card-animated"
+        key={key}
+        style={{
+          background: 'var(--glass-bg)',
+          border: '1px solid var(--glass-border)',
+          borderRadius: '16px',
+          padding: '1.2rem',
+          boxShadow: '0 4px 6px rgba(0,0,0,0.05)',
+          animationDelay: `${idx * 0.07}s`,
+        }}
+      >
         <div className="pred-field-top" style={{ marginBottom: '0.75rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div className="pred-field-label" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <span className="pred-field-icon" style={{ background: 'rgba(239, 68, 68, 0.1)', color: 'var(--primary-color)', padding: '8px', borderRadius: '10px', display: 'flex' }}>
@@ -212,7 +221,7 @@ const Prediction = () => {
             <span className="pred-label-text" style={{ color: 'var(--text-primary)', fontWeight: 700, fontSize: '1.05rem' }}>{label}</span>
           </div>
           {key !== 'Stress_Level' && key !== 'Mood_Score' && (
-            <span style={{ fontWeight: 800, fontSize: '1.1rem', color: 'var(--text-primary)' }}>
+            <span style={{ fontWeight: 800, fontSize: '1.1rem', color: 'var(--text-primary)', transition: 'all 0.2s' }}>
               {formData[key]}
               <span style={{ fontSize: '0.82rem', fontWeight: 600, color: 'var(--text-secondary)', marginLeft: '2px' }}>
                 {key === 'Sleep_Hours' ? ' hrs' : key === 'Exercise_Duration_min' ? ' mins' : key === 'Screen_Time_hr' ? ' hrs' : key === 'Water_Intake_L' ? ' L' : ''}
@@ -222,7 +231,7 @@ const Prediction = () => {
         </div>
         {content}
         {warning && (
-          <div className="pred-warning" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginTop: '0.75rem', color: 'var(--primary-color)', fontSize: '0.82rem', fontWeight: 600, background: 'rgba(239, 68, 68, 0.1)', padding: '6px 10px', borderRadius: '8px' }}>
+          <div className="pred-warning pred-warning-animated" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginTop: '0.75rem', color: 'var(--primary-color)', fontSize: '0.82rem', fontWeight: 600, background: 'rgba(239, 68, 68, 0.1)', padding: '6px 10px', borderRadius: '8px' }}>
             <AlertTriangle size={14} />
             <span>{warning}</span>
           </div>
@@ -234,9 +243,8 @@ const Prediction = () => {
   return (
     <div className="prediction-page fade-in" style={{ padding: 'clamp(1rem, 3vw, 2rem) 0' }}>
       
-      {/* Left: Input Panel */}
       <div className="prediction-form-panel">
-        <div className="prediction-panel-header" style={{ marginBottom: 'clamp(1.5rem, 3vw, 2rem)' }}>
+        <div className="prediction-panel-header pred-header-animated" style={{ marginBottom: 'clamp(1.5rem, 3vw, 2rem)' }}>
           <h2 className="prediction-panel-title" style={{ fontSize: 'clamp(1.5rem, 4vw, 2rem)', fontWeight: 800, marginBottom: '0.5rem', lineHeight: 1.2 }}>How are you feeling?</h2>
           <p className="prediction-panel-subtitle" style={{ fontSize: 'clamp(0.95rem, 2vw, 1.1rem)', color: 'var(--text-secondary)' }}>Log your daily vitals to get an accurate AI-driven energy forecast.</p>
         </div>
@@ -244,15 +252,15 @@ const Prediction = () => {
         <div className="prediction-interactive-inputs" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.25rem' }}>
           
           {renderField('Mood_Score', 'Mood & Vibe', <Smile size={20} />, 
-            <EmojiSelector value={formData.Mood_Score} onChange={handleChange} name="Mood_Score" />
+            <EmojiSelector value={formData.Mood_Score} onChange={handleChange} name="Mood_Score" />, 0
           )}
 
           {renderField('Stress_Level', 'Stress Level', <Brain size={20} />, 
-            <EmojiSelector value={formData.Stress_Level} onChange={handleChange} name="Stress_Level" reversed />
+            <EmojiSelector value={formData.Stress_Level} onChange={handleChange} name="Stress_Level" reversed />, 1
           )}
 
           {renderField('Water_Intake_L', 'Hydration (Liters)', <Droplets size={20} />, 
-            <WaterTracker value={formData.Water_Intake_L} onChange={handleChange} name="Water_Intake_L" />
+            <WaterTracker value={formData.Water_Intake_L} onChange={handleChange} name="Water_Intake_L" />, 2
           )}
 
           {renderField('Sleep_Hours', 'Sleep Duration', <Moon size={20} />, 
@@ -263,7 +271,7 @@ const Prediction = () => {
                 { label: '4h', value: 4 }, { label: '6h', value: 6 }, 
                 { label: '8h', value: 8 }, { label: '10h', value: 10 }
               ]}
-            />
+            />, 3
           )}
 
           {renderField('Exercise_Duration_min', 'Exercise (Minutes)', <Dumbbell size={20} />, 
@@ -274,7 +282,7 @@ const Prediction = () => {
                 { label: 'None', value: 0 }, { label: '15m (Light)', value: 15 }, 
                 { label: '45m (Mod)', value: 45 }, { label: '90m (Intense)', value: 90 }
               ]}
-            />
+            />, 4
           )}
 
           {renderField('Screen_Time_hr', 'Screen Time (Hours)', <Monitor size={20} />, 
@@ -285,14 +293,14 @@ const Prediction = () => {
                 { label: '2h', value: 2 }, { label: '4h', value: 4 }, 
                 { label: '8h', value: 8 }, { label: '12h+', value: 12 }
               ]}
-            />
+            />, 5
           )}
 
         </div>
 
         <button
           id="predict-btn"
-          className="predict-btn"
+          className={`predict-btn pred-btn-animated${loading ? ' pred-btn-loading' : ''}`}
           onClick={handlePredict}
           disabled={loading}
           style={{
@@ -304,23 +312,29 @@ const Prediction = () => {
             fontWeight: 800,
             fontFamily: 'inherit',
             borderRadius: '16px',
-            background: 'linear-gradient(135deg, var(--primary-color), #f43f5e)',
+            background: loading
+              ? 'linear-gradient(135deg, #f59e0b, #ef4444)'
+              : 'linear-gradient(135deg, var(--primary-color), #f43f5e)',
             boxShadow: '0 8px 20px rgba(239, 68, 68, 0.3)',
             border: 'none',
             color: 'white',
-            cursor: 'pointer',
+            cursor: loading ? 'not-allowed' : 'pointer',
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
             gap: '10px',
-            transition: 'transform 0.2s, box-shadow 0.2s'
+            transition: 'transform 0.2s, box-shadow 0.2s, background 0.4s',
+            position: 'relative',
+            overflow: 'hidden',
           }}
           onMouseOver={(e) => {
-            e.currentTarget.style.transform = 'translateY(-2px)';
-            e.currentTarget.style.boxShadow = '0 12px 24px rgba(239, 68, 68, 0.45)';
+            if (!loading) {
+              e.currentTarget.style.transform = 'translateY(-3px) scale(1.01)';
+              e.currentTarget.style.boxShadow = '0 14px 28px rgba(239, 68, 68, 0.45)';
+            }
           }}
           onMouseOut={(e) => {
-            e.currentTarget.style.transform = 'translateY(0)';
+            e.currentTarget.style.transform = 'translateY(0) scale(1)';
             e.currentTarget.style.boxShadow = '0 8px 20px rgba(239, 68, 68, 0.3)';
           }}
         >
@@ -331,15 +345,14 @@ const Prediction = () => {
         </button>
       </div>
 
-      {/* Right: Results Panel */}
-      <div className="prediction-results-panel" style={{ position: 'relative', height: 'fit-content' }}>
+      <div className="prediction-results-panel" style={{ position: 'sticky', top: '1rem', height: 'fit-content' }}>
         {results ? (
-          <div className="glass-card prediction-result-card" style={{ padding: 'clamp(1.5rem, 4vw, 2.5rem)', borderRadius: '24px', position: 'relative', overflow: 'hidden', border: '1px solid var(--glass-border)' }}>
+          <div key={resultKey} className="glass-card prediction-result-card result-reveal-animated" style={{ padding: 'clamp(1.5rem, 4vw, 2.5rem)', borderRadius: '24px', position: 'relative', overflow: 'hidden', border: '1px solid var(--glass-border)' }}>
             <div className="hero-gradient-mesh" style={{ top: '-10%', right: '-10%', width: '300px', height: '300px', opacity: 0.5 }} />
             
             <div style={{ position: 'relative', zIndex: 2 }}>
               <div className="prediction-panel-header" style={{ marginBottom: '2rem', textAlign: 'center' }}>
-                <div style={{ display: 'inline-flex', padding: '12px', background: 'rgba(239,68,68,0.1)', borderRadius: '50%', marginBottom: '1rem' }}>
+                <div className="sparkle-icon-wrap" style={{ display: 'inline-flex', padding: '12px', background: 'rgba(239,68,68,0.1)', borderRadius: '50%', marginBottom: '1rem' }}>
                   <Sparkles size={32} color="var(--primary-color)" />
                 </div>
                 <h2 className="prediction-panel-title" style={{ fontSize: 'clamp(1.4rem, 4vw, 1.8rem)' }}>Your Daily Forecast</h2>
@@ -351,7 +364,7 @@ const Prediction = () => {
                 <ScoreRing label="Focus Potential"    value={results?.Productivity_Score} color="var(--text-primary)" />
               </div>
               
-              <div className="prediction-advice" style={{ marginTop: '2rem', padding: 'clamp(1rem, 3vw, 1.5rem)', background: 'var(--glass-bg)', border: '1px solid var(--glass-border)', borderRadius: '16px', textAlign: 'center' }}>
+              <div className="prediction-advice advice-slide-animated" style={{ marginTop: '2rem', padding: 'clamp(1rem, 3vw, 1.5rem)', background: 'var(--glass-bg)', border: '1px solid var(--glass-border)', borderRadius: '16px', textAlign: 'center' }}>
                 <p style={{ color: 'var(--text-primary)', fontSize: 'clamp(0.95rem, 2vw, 1.05rem)', lineHeight: '1.6', fontWeight: 600, margin: 0 }}>
                   {results?.Energy_Score >= 80
                     ? '🌟 Exceptional! You are primed for deep work and high performance today. Tackle your hardest tasks first!'
@@ -363,10 +376,11 @@ const Prediction = () => {
             </div>
           </div>
         ) : (
-           <div className="glass-card prediction-result-card" style={{ padding: 'clamp(2rem, 5vw, 3rem)', borderRadius: '24px', border: '1px dashed var(--glass-border)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '300px', opacity: 0.7 }}>
-              <Activity size={48} color="var(--text-secondary)" style={{ marginBottom: '1rem' }} />
-              <h3 style={{ color: 'var(--text-primary)', fontSize: 'clamp(1.2rem, 3vw, 1.5rem)', marginBottom: '0.5rem', textAlign: 'center' }}>Awaiting Input</h3>
-              <p style={{ color: 'var(--text-secondary)', textAlign: 'center', maxWidth: '90%', fontSize: 'clamp(0.85rem, 2vw, 1rem)' }}>Fill out your vitals and click "Generate My Forecast" to see your AI predictions here.</p>
+           <div className="glass-card prediction-result-card awaiting-animated" style={{ padding: 'clamp(2rem, 5vw, 3rem)', borderRadius: '24px', border: '1px dashed var(--glass-border)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '300px' }}>
+              <div className="awaiting-orb" />
+              <Activity size={40} color="var(--primary-color)" style={{ marginBottom: '1.25rem', position: 'relative', zIndex: 1 }} />
+              <h3 style={{ color: 'var(--text-primary)', fontSize: 'clamp(1.2rem, 3vw, 1.5rem)', marginBottom: '0.5rem', textAlign: 'center', fontWeight: 800, position: 'relative', zIndex: 1 }}>Awaiting Input</h3>
+              <p style={{ color: 'var(--text-secondary)', textAlign: 'center', maxWidth: '80%', fontSize: 'clamp(0.85rem, 2vw, 1rem)', position: 'relative', zIndex: 1, lineHeight: 1.6 }}>Fill out your vitals and click <strong style={{ color: 'var(--primary-color)' }}>"Generate My Forecast"</strong> to see your AI predictions here.</p>
            </div>
         )}
       </div>
@@ -375,4 +389,3 @@ const Prediction = () => {
 };
 
 export default Prediction;
-

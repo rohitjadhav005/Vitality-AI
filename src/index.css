@@ -1080,6 +1080,154 @@ input[type=range]::-webkit-slider-thumb:hover {
   margin: 0;
 }
 
+/* ── Prediction Page Animations ── */
+
+/* Staggered card slide-up with fade */
+@keyframes predCardIn {
+  from {
+    opacity: 0;
+    transform: translateY(22px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.pred-card-animated {
+  opacity: 0;
+  animation: predCardIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.pred-card-animated:hover {
+  transform: translateY(-3px) !important;
+  box-shadow: 0 10px 30px rgba(239, 68, 68, 0.12) !important;
+  border-color: rgba(239, 68, 68, 0.2) !important;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.25s ease,
+              border-color 0.25s ease !important;
+}
+
+/* Header slide in */
+@keyframes predHeaderIn {
+  from {
+    opacity: 0;
+    transform: translateX(-18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.pred-header-animated {
+  animation: predHeaderIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Results card dramatic reveal */
+@keyframes resultReveal {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.94);
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+.result-reveal-animated {
+  animation: resultReveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Advice card slides up */
+@keyframes adviceSlide {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.advice-slide-animated {
+  animation: adviceSlide 0.5s 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Awaiting state: pulsing background orb */
+@keyframes orbPulse {
+  0%, 100% { transform: scale(1);   opacity: 0.12; }
+  50%       { transform: scale(1.4); opacity: 0.22; }
+}
+
+.awaiting-animated {
+  position: relative;
+  overflow: hidden;
+}
+
+.awaiting-orb {
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  background: radial-gradient(circle, var(--primary-color), transparent 70%);
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: orbPulse 2.8s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* Sparkle icon gentle spin + pulse */
+@keyframes sparkleSpin {
+  0%   { transform: rotate(0deg)   scale(1); }
+  50%  { transform: rotate(20deg)  scale(1.15); }
+  100% { transform: rotate(0deg)   scale(1); }
+}
+
+.sparkle-icon-wrap {
+  animation: sparkleSpin 2.5s ease-in-out infinite;
+}
+
+/* Warning banner pop-in */
+@keyframes warningPop {
+  from { opacity: 0; transform: scale(0.92) translateY(4px); }
+  to   { opacity: 1; transform: scale(1)    translateY(0); }
+}
+
+.pred-warning-animated {
+  animation: warningPop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* Button shimmer on hover */
+@keyframes btnShimmer {
+  0%   { left: -100%; }
+  100% { left: 160%; }
+}
+
+.pred-btn-animated::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+  transform: skewX(-20deg);
+  transition: none;
+}
+
+.pred-btn-animated:hover::before {
+  animation: btnShimmer 0.6s ease forwards;
+}
+
+/* Spin animation for loader icon */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.spin-icon {
+  animation: spin 0.9s linear infinite;
+}
+
 /* ── Analytics & Insights shared ── */
 .page-filter-tabs {
   display: flex;
