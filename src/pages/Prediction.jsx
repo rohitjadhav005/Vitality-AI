@@ -214,136 +214,135 @@ const Prediction = () => {
 
   return (
     <div className="prediction-page fade-in" style={{ padding: 'clamp(1rem, 3vw, 2rem) 0' }}>
-      <div className="prediction-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))', gap: 'clamp(1.5rem, 4vw, 2rem)' }}>
-        
-        {/* Left: Input Panel */}
-        <div className="prediction-form-panel">
-          <div className="prediction-panel-header" style={{ marginBottom: 'clamp(1.5rem, 3vw, 2rem)' }}>
-            <h2 className="prediction-panel-title" style={{ fontSize: 'clamp(1.5rem, 4vw, 2rem)', fontWeight: 800, marginBottom: '0.5rem', lineHeight: 1.2 }}>How are you feeling?</h2>
-            <p className="prediction-panel-subtitle" style={{ fontSize: 'clamp(0.95rem, 2vw, 1.1rem)', color: 'var(--text-secondary)' }}>Log your daily vitals to get an accurate AI-driven energy forecast.</p>
-          </div>
-
-          <div className="prediction-interactive-inputs" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1rem' }}>
-            
-            {renderField('Mood_Score', 'Mood & Vibe', <Smile size={20} />, 
-              <EmojiSelector value={formData.Mood_Score} onChange={handleChange} name="Mood_Score" />
-            )}
-
-            {renderField('Stress_Level', 'Stress Level', <Brain size={20} />, 
-              <EmojiSelector value={formData.Stress_Level} onChange={handleChange} name="Stress_Level" reversed />
-            )}
-
-            {renderField('Water_Intake_L', 'Hydration (Liters)', <Droplets size={20} />, 
-              <WaterTracker value={formData.Water_Intake_L} onChange={handleChange} name="Water_Intake_L" />
-            )}
-
-            {renderField('Sleep_Hours', 'Sleep Duration', <Moon size={20} />, 
-              <SliderWithPresets 
-                value={formData.Sleep_Hours} onChange={handleChange} name="Sleep_Hours" 
-                min={0} max={14} step={0.5} color="var(--text-primary)"
-                presets={[
-                  { label: '4h', value: 4 }, { label: '6h', value: 6 }, 
-                  { label: '8h', value: 8 }, { label: '10h', value: 10 }
-                ]}
-              />
-            )}
-
-            {renderField('Exercise_Duration_min', 'Exercise (Minutes)', <Dumbbell size={20} />, 
-              <SliderWithPresets 
-                value={formData.Exercise_Duration_min} onChange={handleChange} name="Exercise_Duration_min" 
-                min={0} max={180} step={5} color="var(--primary-color)"
-                presets={[
-                  { label: 'None', value: 0 }, { label: '15m (Light)', value: 15 }, 
-                  { label: '45m (Mod)', value: 45 }, { label: '90m (Intense)', value: 90 }
-                ]}
-              />
-            )}
-
-            {renderField('Screen_Time_hr', 'Screen Time (Hours)', <Monitor size={20} />, 
-              <SliderWithPresets 
-                value={formData.Screen_Time_hr} onChange={handleChange} name="Screen_Time_hr" 
-                min={0} max={16} step={0.5} color="var(--text-primary)"
-                presets={[
-                  { label: '2h', value: 2 }, { label: '4h', value: 4 }, 
-                  { label: '8h', value: 8 }, { label: '12h+', value: 12 }
-                ]}
-              />
-            )}
-
-          </div>
-
-          <button
-            id="predict-btn"
-            className="predict-btn"
-            onClick={handlePredict}
-            disabled={loading}
-            style={{
-              width: '100%',
-              padding: 'clamp(1rem, 3vw, 1.2rem)',
-              fontSize: 'clamp(1.05rem, 3vw, 1.2rem)',
-              fontWeight: 800,
-              borderRadius: '16px',
-              marginTop: '1rem',
-              background: 'linear-gradient(135deg, var(--primary-color), #f43f5e)',
-              boxShadow: '0 8px 20px rgba(239, 68, 68, 0.3)',
-              border: 'none',
-              color: 'white',
-              cursor: 'pointer',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              gap: '10px',
-              transition: 'transform 0.2s, box-shadow 0.2s'
-            }}
-            onMouseOver={(e) => e.currentTarget.style.transform = 'translateY(-2px)'}
-            onMouseOut={(e) => e.currentTarget.style.transform = 'translateY(0)'}
-          >
-            {loading
-              ? <><Loader2 size={24} className="spin-icon" /> Analyzing your vitals...</>
-              : <><Zap size={24} /> Generate My Forecast</>
-            }
-          </button>
+      
+      {/* Left: Input Panel */}
+      <div className="prediction-form-panel">
+        <div className="prediction-panel-header" style={{ marginBottom: 'clamp(1.5rem, 3vw, 2rem)' }}>
+          <h2 className="prediction-panel-title" style={{ fontSize: 'clamp(1.5rem, 4vw, 2rem)', fontWeight: 800, marginBottom: '0.5rem', lineHeight: 1.2 }}>How are you feeling?</h2>
+          <p className="prediction-panel-subtitle" style={{ fontSize: 'clamp(0.95rem, 2vw, 1.1rem)', color: 'var(--text-secondary)' }}>Log your daily vitals to get an accurate AI-driven energy forecast.</p>
         </div>
 
-        {/* Right: Results Panel */}
-        <div className="prediction-results-panel" style={{ position: 'relative', height: 'fit-content' }}>
-          {results ? (
-            <div className="glass-card prediction-result-card" style={{ padding: 'clamp(1.5rem, 4vw, 2.5rem)', borderRadius: '24px', position: 'relative', overflow: 'hidden', border: '1px solid var(--glass-border)' }}>
-              <div className="hero-gradient-mesh" style={{ top: '-10%', right: '-10%', width: '300px', height: '300px', opacity: 0.5 }} />
+        <div className="prediction-interactive-inputs" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.25rem' }}>
+          
+          {renderField('Mood_Score', 'Mood & Vibe', <Smile size={20} />, 
+            <EmojiSelector value={formData.Mood_Score} onChange={handleChange} name="Mood_Score" />
+          )}
+
+          {renderField('Stress_Level', 'Stress Level', <Brain size={20} />, 
+            <EmojiSelector value={formData.Stress_Level} onChange={handleChange} name="Stress_Level" reversed />
+          )}
+
+          {renderField('Water_Intake_L', 'Hydration (Liters)', <Droplets size={20} />, 
+            <WaterTracker value={formData.Water_Intake_L} onChange={handleChange} name="Water_Intake_L" />
+          )}
+
+          {renderField('Sleep_Hours', 'Sleep Duration', <Moon size={20} />, 
+            <SliderWithPresets 
+              value={formData.Sleep_Hours} onChange={handleChange} name="Sleep_Hours" 
+              min={0} max={14} step={0.5} color="var(--text-primary)"
+              presets={[
+                { label: '4h', value: 4 }, { label: '6h', value: 6 }, 
+                { label: '8h', value: 8 }, { label: '10h', value: 10 }
+              ]}
+            />
+          )}
+
+          {renderField('Exercise_Duration_min', 'Exercise (Minutes)', <Dumbbell size={20} />, 
+            <SliderWithPresets 
+              value={formData.Exercise_Duration_min} onChange={handleChange} name="Exercise_Duration_min" 
+              min={0} max={180} step={5} color="var(--primary-color)"
+              presets={[
+                { label: 'None', value: 0 }, { label: '15m (Light)', value: 15 }, 
+                { label: '45m (Mod)', value: 45 }, { label: '90m (Intense)', value: 90 }
+              ]}
+            />
+          )}
+
+          {renderField('Screen_Time_hr', 'Screen Time (Hours)', <Monitor size={20} />, 
+            <SliderWithPresets 
+              value={formData.Screen_Time_hr} onChange={handleChange} name="Screen_Time_hr" 
+              min={0} max={16} step={0.5} color="var(--text-primary)"
+              presets={[
+                { label: '2h', value: 2 }, { label: '4h', value: 4 }, 
+                { label: '8h', value: 8 }, { label: '12h+', value: 12 }
+              ]}
+            />
+          )}
+
+        </div>
+
+        <button
+          id="predict-btn"
+          className="predict-btn"
+          onClick={handlePredict}
+          disabled={loading}
+          style={{
+            width: '100%',
+            maxWidth: '380px',
+            margin: '2rem auto 0 auto',
+            padding: 'clamp(1rem, 3vw, 1.2rem)',
+            fontSize: 'clamp(1.05rem, 3vw, 1.2rem)',
+            fontWeight: 800,
+            borderRadius: '16px',
+            background: 'linear-gradient(135deg, var(--primary-color), #f43f5e)',
+            boxShadow: '0 8px 20px rgba(239, 68, 68, 0.3)',
+            border: 'none',
+            color: 'white',
+            cursor: 'pointer',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            gap: '10px',
+            transition: 'transform 0.2s, box-shadow 0.2s'
+          }}
+          onMouseOver={(e) => e.currentTarget.style.transform = 'translateY(-2px)'}
+          onMouseOut={(e) => e.currentTarget.style.transform = 'translateY(0)'}
+        >
+          {loading
+            ? <><Loader2 size={24} className="spin-icon" /> Analyzing your vitals...</>
+            : <><Zap size={24} /> Generate My Forecast</>
+          }
+        </button>
+      </div>
+
+      {/* Right: Results Panel */}
+      <div className="prediction-results-panel" style={{ position: 'relative', height: 'fit-content' }}>
+        {results ? (
+          <div className="glass-card prediction-result-card" style={{ padding: 'clamp(1.5rem, 4vw, 2.5rem)', borderRadius: '24px', position: 'relative', overflow: 'hidden', border: '1px solid var(--glass-border)' }}>
+            <div className="hero-gradient-mesh" style={{ top: '-10%', right: '-10%', width: '300px', height: '300px', opacity: 0.5 }} />
+            
+            <div style={{ position: 'relative', zIndex: 2 }}>
+              <div className="prediction-panel-header" style={{ marginBottom: '2rem', textAlign: 'center' }}>
+                <div style={{ display: 'inline-flex', padding: '12px', background: 'rgba(239,68,68,0.1)', borderRadius: '50%', marginBottom: '1rem' }}>
+                  <Sparkles size={32} color="var(--primary-color)" />
+                </div>
+                <h2 className="prediction-panel-title" style={{ fontSize: 'clamp(1.4rem, 4vw, 1.8rem)' }}>Your Daily Forecast</h2>
+                <p className="prediction-panel-subtitle" style={{ fontSize: 'clamp(0.9rem, 2vw, 1rem)' }}>Here is your predicted performance capacity based on your vitals.</p>
+              </div>
               
-              <div style={{ position: 'relative', zIndex: 2 }}>
-                <div className="prediction-panel-header" style={{ marginBottom: '2rem', textAlign: 'center' }}>
-                  <div style={{ display: 'inline-flex', padding: '12px', background: 'rgba(239,68,68,0.1)', borderRadius: '50%', marginBottom: '1rem' }}>
-                    <Sparkles size={32} color="var(--primary-color)" />
-                  </div>
-                  <h2 className="prediction-panel-title" style={{ fontSize: 'clamp(1.4rem, 4vw, 1.8rem)' }}>Your Daily Forecast</h2>
-                  <p className="prediction-panel-subtitle" style={{ fontSize: 'clamp(0.9rem, 2vw, 1rem)' }}>Here is your predicted performance capacity based on your vitals.</p>
-                </div>
-                
-                <div className="score-rings-row" style={{ display: 'flex', justifyContent: 'space-around', margin: 'clamp(1.5rem, 4vw, 3rem) 0', gap: '1rem', flexWrap: 'wrap' }}>
-                  <ScoreRing label="Energy Level"      value={results?.Energy_Score}      color="var(--primary-color)" />
-                  <ScoreRing label="Focus Potential"    value={results?.Productivity_Score} color="var(--text-primary)" />
-                </div>
-                
-                <div className="prediction-advice" style={{ marginTop: '2rem', padding: 'clamp(1rem, 3vw, 1.5rem)', background: 'var(--glass-bg)', border: '1px solid var(--glass-border)', borderRadius: '16px', textAlign: 'center' }}>
-                  <p style={{ color: 'var(--text-primary)', fontSize: 'clamp(0.95rem, 2vw, 1.05rem)', lineHeight: '1.6', fontWeight: 600, margin: 0 }}>
-                    {results?.Energy_Score >= 80
-                      ? '🌟 Exceptional! You are primed for deep work and high performance today. Tackle your hardest tasks first!'
-                      : results?.Energy_Score >= 60
-                      ? '⚡ Solid baseline. You have steady energy, but remember to take breaks to sustain it.'
-                      : '💡 Your vitals suggest fatigue. Focus on light tasks and prioritize recovery tonight.'}
-                  </p>
-                </div>
+              <div className="score-rings-row" style={{ display: 'flex', justifyContent: 'space-around', margin: 'clamp(1.5rem, 4vw, 3rem) 0', gap: '1rem', flexWrap: 'wrap' }}>
+                <ScoreRing label="Energy Level"      value={results?.Energy_Score}      color="var(--primary-color)" />
+                <ScoreRing label="Focus Potential"    value={results?.Productivity_Score} color="var(--text-primary)" />
+              </div>
+              
+              <div className="prediction-advice" style={{ marginTop: '2rem', padding: 'clamp(1rem, 3vw, 1.5rem)', background: 'var(--glass-bg)', border: '1px solid var(--glass-border)', borderRadius: '16px', textAlign: 'center' }}>
+                <p style={{ color: 'var(--text-primary)', fontSize: 'clamp(0.95rem, 2vw, 1.05rem)', lineHeight: '1.6', fontWeight: 600, margin: 0 }}>
+                  {results?.Energy_Score >= 80
+                    ? '🌟 Exceptional! You are primed for deep work and high performance today. Tackle your hardest tasks first!'
+                    : results?.Energy_Score >= 60
+                    ? '⚡ Solid baseline. You have steady energy, but remember to take breaks to sustain it.'
+                    : '💡 Your vitals suggest fatigue. Focus on light tasks and prioritize recovery tonight.'}
+                </p>
               </div>
             </div>
-          ) : (
-             <div className="glass-card prediction-result-card" style={{ padding: 'clamp(2rem, 5vw, 3rem)', borderRadius: '24px', border: '1px dashed var(--glass-border)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '300px', opacity: 0.7 }}>
-                <Activity size={48} color="var(--text-secondary)" style={{ marginBottom: '1rem' }} />
-                <h3 style={{ color: 'var(--text-primary)', fontSize: 'clamp(1.2rem, 3vw, 1.5rem)', marginBottom: '0.5rem', textAlign: 'center' }}>Awaiting Input</h3>
-                <p style={{ color: 'var(--text-secondary)', textAlign: 'center', maxWidth: '90%', fontSize: 'clamp(0.85rem, 2vw, 1rem)' }}>Fill out your vitals and click "Generate My Forecast" to see your AI predictions here.</p>
-             </div>
-          )}
-        </div>
+          </div>
+        ) : (
+           <div className="glass-card prediction-result-card" style={{ padding: 'clamp(2rem, 5vw, 3rem)', borderRadius: '24px', border: '1px dashed var(--glass-border)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '300px', opacity: 0.7 }}>
+              <Activity size={48} color="var(--text-secondary)" style={{ marginBottom: '1rem' }} />
+              <h3 style={{ color: 'var(--text-primary)', fontSize: 'clamp(1.2rem, 3vw, 1.5rem)', marginBottom: '0.5rem', textAlign: 'center' }}>Awaiting Input</h3>
+              <p style={{ color: 'var(--text-secondary)', textAlign: 'center', maxWidth: '90%', fontSize: 'clamp(0.85rem, 2vw, 1rem)' }}>Fill out your vitals and click "Generate My Forecast" to see your AI predictions here.</p>
+           </div>
+        )}
       </div>
     </div>
   );
