@@ -214,14 +214,14 @@ const Prediction = () => {
   };
 
   return (
-    <div className="prediction-page fade-in" style={{ padding: '2rem 0' }}>
-      <div className="prediction-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', gap: '2rem' }}>
+    <div className="prediction-page fade-in" style={{ padding: 'clamp(1rem, 3vw, 2rem) 0' }}>
+      <div className="prediction-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))', gap: 'clamp(1.5rem, 4vw, 2rem)' }}>
         
         {/* Left: Input Panel */}
         <div className="prediction-form-panel">
-          <div className="prediction-panel-header" style={{ marginBottom: '2rem' }}>
-            <h2 className="prediction-panel-title" style={{ fontSize: '2rem', fontWeight: 800, marginBottom: '0.5rem' }}>How are you feeling?</h2>
-            <p className="prediction-panel-subtitle" style={{ fontSize: '1.1rem', color: 'var(--text-secondary)' }}>Log your daily vitals to get an accurate AI-driven energy forecast.</p>
+          <div className="prediction-panel-header" style={{ marginBottom: 'clamp(1.5rem, 3vw, 2rem)' }}>
+            <h2 className="prediction-panel-title" style={{ fontSize: 'clamp(1.5rem, 4vw, 2rem)', fontWeight: 800, marginBottom: '0.5rem', lineHeight: 1.2 }}>How are you feeling?</h2>
+            <p className="prediction-panel-subtitle" style={{ fontSize: 'clamp(0.95rem, 2vw, 1.1rem)', color: 'var(--text-secondary)' }}>Log your daily vitals to get an accurate AI-driven energy forecast.</p>
           </div>
 
           <div className="prediction-interactive-inputs">
@@ -280,8 +280,8 @@ const Prediction = () => {
             disabled={loading}
             style={{
               width: '100%',
-              padding: '1.2rem',
-              fontSize: '1.2rem',
+              padding: 'clamp(1rem, 3vw, 1.2rem)',
+              fontSize: 'clamp(1.05rem, 3vw, 1.2rem)',
               fontWeight: 800,
               borderRadius: '16px',
               marginTop: '1rem',
@@ -307,9 +307,9 @@ const Prediction = () => {
         </div>
 
         {/* Right: Results Panel */}
-        <div className="prediction-results-panel" style={{ position: 'sticky', top: '2rem', height: 'fit-content' }}>
+        <div className="prediction-results-panel" style={{ position: 'relative', height: 'fit-content' }}>
           {results ? (
-            <div className="glass-card prediction-result-card" style={{ padding: '2.5rem', borderRadius: '24px', position: 'relative', overflow: 'hidden', border: '1px solid var(--glass-border)' }}>
+            <div className="glass-card prediction-result-card" style={{ padding: 'clamp(1.5rem, 4vw, 2.5rem)', borderRadius: '24px', position: 'relative', overflow: 'hidden', border: '1px solid var(--glass-border)' }}>
               <div className="hero-gradient-mesh" style={{ top: '-10%', right: '-10%', width: '300px', height: '300px', opacity: 0.5 }} />
               
               <div style={{ position: 'relative', zIndex: 2 }}>
@@ -317,17 +317,17 @@ const Prediction = () => {
                   <div style={{ display: 'inline-flex', padding: '12px', background: 'rgba(239,68,68,0.1)', borderRadius: '50%', marginBottom: '1rem' }}>
                     <Sparkles size={32} color="var(--primary-color)" />
                   </div>
-                  <h2 className="prediction-panel-title" style={{ fontSize: '1.8rem' }}>Your Daily Forecast</h2>
-                  <p className="prediction-panel-subtitle">Here is your predicted performance capacity based on your vitals.</p>
+                  <h2 className="prediction-panel-title" style={{ fontSize: 'clamp(1.4rem, 4vw, 1.8rem)' }}>Your Daily Forecast</h2>
+                  <p className="prediction-panel-subtitle" style={{ fontSize: 'clamp(0.9rem, 2vw, 1rem)' }}>Here is your predicted performance capacity based on your vitals.</p>
                 </div>
                 
-                <div className="score-rings-row" style={{ display: 'flex', justifyContent: 'space-around', margin: '3rem 0', gap: '1rem' }}>
+                <div className="score-rings-row" style={{ display: 'flex', justifyContent: 'space-around', margin: 'clamp(1.5rem, 4vw, 3rem) 0', gap: '1rem', flexWrap: 'wrap' }}>
                   <ScoreRing label="Energy Level"      value={results?.Energy_Score}      color="var(--primary-color)" />
                   <ScoreRing label="Focus Potential"    value={results?.Productivity_Score} color="var(--text-primary)" />
                 </div>
                 
-                <div className="prediction-advice" style={{ marginTop: '2rem', padding: '1.5rem', background: 'var(--glass-bg)', border: '1px solid var(--glass-border)', borderRadius: '16px', textAlign: 'center' }}>
-                  <p style={{ color: 'var(--text-primary)', fontSize: '1.05rem', lineHeight: '1.6', fontWeight: 600, margin: 0 }}>
+                <div className="prediction-advice" style={{ marginTop: '2rem', padding: 'clamp(1rem, 3vw, 1.5rem)', background: 'var(--glass-bg)', border: '1px solid var(--glass-border)', borderRadius: '16px', textAlign: 'center' }}>
+                  <p style={{ color: 'var(--text-primary)', fontSize: 'clamp(0.95rem, 2vw, 1.05rem)', lineHeight: '1.6', fontWeight: 600, margin: 0 }}>
                     {results?.Energy_Score >= 80
                       ? '🌟 Exceptional! You are primed for deep work and high performance today. Tackle your hardest tasks first!'
                       : results?.Energy_Score >= 60
@@ -338,10 +338,10 @@ const Prediction = () => {
               </div>
             </div>
           ) : (
-             <div className="glass-card prediction-result-card" style={{ padding: '3rem', borderRadius: '24px', border: '1px dashed var(--glass-border)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '400px', opacity: 0.7 }}>
+             <div className="glass-card prediction-result-card" style={{ padding: 'clamp(2rem, 5vw, 3rem)', borderRadius: '24px', border: '1px dashed var(--glass-border)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '300px', opacity: 0.7 }}>
                 <Activity size={48} color="var(--text-secondary)" style={{ marginBottom: '1rem' }} />
-                <h3 style={{ color: 'var(--text-primary)', fontSize: '1.5rem', marginBottom: '0.5rem' }}>Awaiting Input</h3>
-                <p style={{ color: 'var(--text-secondary)', textAlign: 'center', maxWidth: '80%' }}>Fill out your vitals and click "Generate My Forecast" to see your AI predictions here.</p>
+                <h3 style={{ color: 'var(--text-primary)', fontSize: 'clamp(1.2rem, 3vw, 1.5rem)', marginBottom: '0.5rem', textAlign: 'center' }}>Awaiting Input</h3>
+                <p style={{ color: 'var(--text-secondary)', textAlign: 'center', maxWidth: '90%', fontSize: 'clamp(0.85rem, 2vw, 1rem)' }}>Fill out your vitals and click "Generate My Forecast" to see your AI predictions here.</p>
              </div>
           )}
         </div>
