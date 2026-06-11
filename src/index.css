@@ -43,47 +43,48 @@ html {
 }
 
 :root {
-  /* Brand — Red / White / Black */
+  /* Brand */
   --primary-color: #EF4444;
   --secondary-color: #DC2626;
   --bg-color: #F0F4F8;
 
-  /* ── Sidebar: solid white for consistent brand look ── */
-  --sidebar-bg: #ffffff;
-  --menu-active-bg: rgba(239, 68, 68, 0.09);
-
   /* ── Apple-style Frosted Glass (Light) ── */
-  --glass-bg: rgba(255, 255, 255, 0.35);
-  --glass-surface: rgba(255, 255, 255, 0.5);
-  --glass-border: rgba(255, 255, 255, 0.4);
-  --glass-border-inner: rgba(255, 255, 255, 0.8);
-  --glass-hover: rgba(239, 68, 68, 0.06);
+  /* Sidebar: solid opaque color (zero transparency) */
+  --sidebar-bg: #ffffff;
+  --menu-active-bg: rgba(239, 68, 68, 0.08);
 
-  /* Stronger blur like macOS / visionOS / iOS */
-  --glass-blur: blur(40px) saturate(200%);
+  --glass-bg: rgba(255, 255, 255, 0.58);
+  --glass-surface: rgba(255, 255, 255, 0.80);
+  --glass-border: rgba(0, 0, 0, 0.07);
+  --glass-border-inner: rgba(255, 255, 255, 0.90);
+  --glass-hover: rgba(0, 0, 0, 0.04);
 
-  /* Layered shadows */
+  /* Stronger blur like macOS / visionOS */
+  --glass-blur: blur(40px) saturate(180%);
+
+  /* Layered shadows - removed outer shadows for flatter glass look */
   --glass-shadow:
-    0 8px 32px 0 rgba(0, 0, 0, 0.1),
-    inset 0 1px 1px rgba(255, 255, 255, 0.8);
+    0 1px 0 rgba(255, 255, 255, 0.8) inset;
 
   /* Text */
   --text-primary: #0F172A;
-  --text-secondary: #475569;
+  --text-secondary: #64748B;
 
   /* Shadows */
   --shadow-sm:
-    0 4px 12px rgba(0, 0, 0, 0.05),
-    inset 0 1px 1px rgba(255, 255, 255, 0.6);
+    0 1px 2px rgba(0, 0, 0, 0.04),
+    0 0 0 0.5px rgba(0, 0, 0, 0.05);
   --shadow-md:
-    0 8px 24px rgba(0, 0, 0, 0.08),
-    inset 0 1px 1px rgba(255, 255, 255, 0.6);
+    0 4px 16px rgba(0, 0, 0, 0.08),
+    0 1px 4px rgba(0, 0, 0, 0.05),
+    0 0 0 0.5px rgba(0, 0, 0, 0.04);
   --shadow-lg:
-    0 12px 40px rgba(0, 0, 0, 0.12),
-    inset 0 1px 1px rgba(255, 255, 255, 0.6);
+    0 12px 40px rgba(0, 0, 0, 0.10),
+    0 4px 12px rgba(0, 0, 0, 0.06),
+    0 0 0 0.5px rgba(0, 0, 0, 0.04);
 
   /* Overlay to make the blurred image comfortable for light mode */
-  --bg-overlay: rgba(240, 244, 248, 0.2);
+  --bg-overlay: rgba(240, 244, 248, 0.55);
 }
 
 :root.dark {
@@ -91,39 +92,40 @@ html {
   --secondary-color: #DC2626;
   --bg-color: #080A0F;
 
-  /* ── Sidebar: solid dark for consistent brand look ── */
-  --sidebar-bg: #111111;
-  --menu-active-bg: rgba(239, 68, 68, 0.12);
-
   /* ── Apple-style Frosted Glass (Dark) ── */
-  --glass-bg: rgba(30, 30, 30, 0.45);
-  --glass-surface: rgba(50, 50, 50, 0.5);
-  --glass-border: rgba(255, 255, 255, 0.1);
-  --glass-border-inner: rgba(255, 255, 255, 0.15);
-  --glass-hover: rgba(239, 68, 68, 0.08);
+  /* Sidebar: solid opaque color (zero transparency) */
+  --sidebar-bg: #0c1222;
+  --menu-active-bg: rgba(239, 68, 68, 0.10);
 
-  --glass-blur: blur(40px) saturate(200%);
+  --glass-bg: rgba(16, 22, 38, 0.68);
+  --glass-surface: rgba(24, 32, 52, 0.85);
+  --glass-border: rgba(255, 255, 255, 0.07);
+  --glass-border-inner: rgba(255, 255, 255, 0.04);
+  --glass-hover: rgba(255, 255, 255, 0.06);
 
-  /* Layered shadows */
+  --glass-blur: blur(48px) saturate(200%);
+
+  /* Layered shadows - removed outer shadows for flatter glass look */
   --glass-shadow:
-    0 8px 32px 0 rgba(0, 0, 0, 0.3),
-    inset 0 1px 1px rgba(255, 255, 255, 0.06);
+    0 1px 0 rgba(255, 255, 255, 0.04) inset;
 
-  --text-primary: #F8FAFC;
-  --text-secondary: #94A3B8;
+  --text-primary: #F1F5F9;
+  --text-secondary: #8892A4;
 
   --shadow-sm:
-    0 4px 12px rgba(0, 0, 0, 0.2),
-    inset 0 1px 1px rgba(255, 255, 255, 0.04);
+    0 1px 3px rgba(0, 0, 0, 0.35),
+    0 0 0 0.5px rgba(255, 255, 255, 0.04);
   --shadow-md:
-    0 8px 24px rgba(0, 0, 0, 0.25),
-    inset 0 1px 1px rgba(255, 255, 255, 0.04);
+    0 4px 16px rgba(0, 0, 0, 0.40),
+    0 1px 4px rgba(0, 0, 0, 0.30),
+    0 0 0 0.5px rgba(255, 255, 255, 0.04);
   --shadow-lg:
-    0 12px 40px rgba(0, 0, 0, 0.3),
-    inset 0 1px 1px rgba(255, 255, 255, 0.04);
+    0 16px 50px rgba(0, 0, 0, 0.55),
+    0 4px 16px rgba(0, 0, 0, 0.35),
+    0 0 0 0.5px rgba(255, 255, 255, 0.04);
 
   /* Overlay to make the blurred image comfortable for dark mode */
-  --bg-overlay: rgba(8, 10, 15, 0.4);
+  --bg-overlay: rgba(8, 10, 15, 0.70);
 }
 
 * {
@@ -494,7 +496,7 @@ body::after {
   border: 1px solid var(--glass-border);
   outline: 1px solid var(--glass-border-inner);
   outline-offset: -1px;
-  border-radius: 32px;
+  border-radius: 20px;
   padding: 1.5rem;
   box-shadow: var(--glass-shadow);
   transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
@@ -1403,16 +1405,10 @@ input[type=range]::-webkit-slider-thumb:hover {
   .sidebar:not(.sidebar-collapsed) {
     transform: translateX(0);
     width: 17.5rem !important;
-    /* Fully opaque on mobile — no transparency issues */
-    background: #ffffff !important;
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.18) !important;
-  }
-
-  :root.dark .sidebar:not(.sidebar-collapsed) {
-    background: #111111 !important;
-    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.45) !important;
+    background: var(--sidebar-bg) !important;
+    backdrop-filter: var(--glass-blur) !important;
+    -webkit-backdrop-filter: var(--glass-blur) !important;
+    box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15) !important;
   }
 
   .main-wrapper {
