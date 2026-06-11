@@ -83,8 +83,13 @@ html {
     0 4px 12px rgba(0, 0, 0, 0.06),
     0 0 0 0.5px rgba(0, 0, 0, 0.04);
 
-  /* Background Image */
-  --body-bg-img: url('/src/assets/vitality_bg.png');
+  /* Stunning macOS-style light background - Noise free */
+  --body-bg-img: 
+    radial-gradient(circle at 15% 50%, rgba(239, 68, 68, 0.12), transparent 50%),
+    radial-gradient(circle at 85% 30%, rgba(244, 114, 182, 0.12), transparent 50%),
+    radial-gradient(circle at 50% 80%, rgba(167, 139, 250, 0.1), transparent 60%),
+    radial-gradient(circle at 0% 0%, rgba(240, 244, 248, 1), transparent 60%),
+    radial-gradient(circle at 100% 100%, rgba(240, 244, 248, 1), transparent 60%);
 }
 
 :root.dark {
@@ -124,8 +129,13 @@ html {
     0 4px 16px rgba(0, 0, 0, 0.35),
     0 0 0 0.5px rgba(255, 255, 255, 0.04);
 
-  /* Background Image */
-  --body-bg-img: url('/src/assets/vitality_bg.png');
+  /* Stunning macOS-style dark background - Noise free */
+  --body-bg-img: 
+    radial-gradient(circle at 15% 50%, rgba(239, 68, 68, 0.15), transparent 50%),
+    radial-gradient(circle at 85% 30%, rgba(139, 92, 246, 0.12), transparent 50%),
+    radial-gradient(circle at 50% 80%, rgba(56, 189, 248, 0.1), transparent 60%),
+    radial-gradient(circle at 0% 0%, rgba(8, 10, 15, 1), transparent 60%),
+    radial-gradient(circle at 100% 100%, rgba(8, 10, 15, 1), transparent 60%);
 }
 
 * {
