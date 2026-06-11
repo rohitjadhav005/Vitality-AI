@@ -451,11 +451,12 @@ body::after {
 /* Content Area */
 .content-area {
   flex: 1;
-  padding: 2rem 2rem 2rem;
+  padding: 2rem 2rem 4rem;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   display: flex;
   flex-direction: column;
+  scroll-padding-bottom: 2rem;
 }
 
 /* Scrollbar styling */
