@@ -142,13 +142,16 @@ html {
   transition: background-color 0.3s ease, color 0.3s ease;
   overflow-x: hidden;
   width: 100%;
-  background-image: none;
-  background-color: var(--bg-color);
+  background-image: url('/src/assets/vitality_bg.png');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
 body {
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  background-color: var(--bg-color);
+  background-color: var(--bg-overlay);
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
   color: var(--text-primary);
