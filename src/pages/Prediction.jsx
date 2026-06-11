@@ -185,7 +185,6 @@ const Prediction = () => {
         border: '1px solid var(--glass-border)',
         borderRadius: '16px',
         padding: '1.5rem',
-        marginBottom: '1rem',
         boxShadow: '0 4px 6px rgba(0,0,0,0.05)',
         transition: 'transform 0.2s ease',
       }}>
@@ -224,7 +223,7 @@ const Prediction = () => {
             <p className="prediction-panel-subtitle" style={{ fontSize: 'clamp(0.95rem, 2vw, 1.1rem)', color: 'var(--text-secondary)' }}>Log your daily vitals to get an accurate AI-driven energy forecast.</p>
           </div>
 
-          <div className="prediction-interactive-inputs">
+          <div className="prediction-interactive-inputs" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1rem' }}>
             
             {renderField('Mood_Score', 'Mood & Vibe', <Smile size={20} />, 
               <EmojiSelector value={formData.Mood_Score} onChange={handleChange} name="Mood_Score" />
