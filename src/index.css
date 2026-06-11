@@ -49,17 +49,18 @@ html {
   --bg-color: #F0F4F8;
 
   /* ── Apple-style Frosted Glass (Light) ── */
-  --sidebar-bg: rgba(255, 255, 255, 0.72);
+  /* Sidebar: almost opaque but with enough transparency for the blur to work */
+  --sidebar-bg: rgba(255, 255, 255, 0.85);
   --menu-active-bg: rgba(239, 68, 68, 0.08);
 
   --glass-bg: rgba(255, 255, 255, 0.58);
   --glass-surface: rgba(255, 255, 255, 0.80);
   --glass-border: rgba(0, 0, 0, 0.07);
   --glass-border-inner: rgba(255, 255, 255, 0.90);
-  --glass-hover: rgba(255, 255, 255, 0.72);
+  --glass-hover: rgba(0, 0, 0, 0.04);
 
   /* Stronger blur like macOS / visionOS */
-  --glass-blur: blur(32px) saturate(180%);
+  --glass-blur: blur(40px) saturate(180%);
 
   /* Layered shadows */
   --glass-shadow:
@@ -84,7 +85,11 @@ html {
     0 4px 12px rgba(0, 0, 0, 0.06),
     0 0 0 0.5px rgba(0, 0, 0, 0.04);
 
-  --body-bg-img: linear-gradient(rgba(240, 244, 248, 0.50), rgba(240, 244, 248, 0.50)), url('/vitality_bg.png');
+  /* Soft, elegant mesh gradient theme for the background */
+  --body-bg-img: radial-gradient(at 0% 0%, rgba(239, 68, 68, 0.12) 0px, transparent 50%),
+                 radial-gradient(at 100% 0%, rgba(240, 244, 248, 1) 0px, transparent 50%),
+                 radial-gradient(at 100% 100%, rgba(220, 38, 38, 0.08) 0px, transparent 50%),
+                 radial-gradient(at 0% 100%, rgba(240, 244, 248, 1) 0px, transparent 50%);
 }
 
 :root.dark {
@@ -93,7 +98,8 @@ html {
   --bg-color: #080A0F;
 
   /* ── Apple-style Frosted Glass (Dark) ── */
-  --sidebar-bg: rgba(12, 16, 28, 0.82);
+  /* Sidebar: deeply tinted but glassy */
+  --sidebar-bg: rgba(12, 16, 28, 0.90);
   --menu-active-bg: rgba(239, 68, 68, 0.10);
 
   --glass-bg: rgba(16, 22, 38, 0.68);
@@ -102,7 +108,7 @@ html {
   --glass-border-inner: rgba(255, 255, 255, 0.04);
   --glass-hover: rgba(255, 255, 255, 0.06);
 
-  --glass-blur: blur(40px) saturate(160%);
+  --glass-blur: blur(48px) saturate(200%);
 
   --glass-shadow:
     0 2px 4px rgba(0, 0, 0, 0.30),
@@ -124,7 +130,11 @@ html {
     0 4px 16px rgba(0, 0, 0, 0.35),
     0 0 0 0.5px rgba(255, 255, 255, 0.04);
 
-  --body-bg-img: linear-gradient(rgba(8, 10, 15, 0.72), rgba(8, 10, 15, 0.72)), url('/vitality_bg.png');
+  /* Deep space mesh gradient theme for dark mode */
+  --body-bg-img: radial-gradient(at 0% 0%, rgba(239, 68, 68, 0.15) 0px, transparent 50%),
+                 radial-gradient(at 100% 0%, rgba(8, 10, 15, 1) 0px, transparent 50%),
+                 radial-gradient(at 100% 100%, rgba(220, 38, 38, 0.10) 0px, transparent 50%),
+                 radial-gradient(at 0% 100%, rgba(8, 10, 15, 1) 0px, transparent 50%);
 }
 
 * {
@@ -147,7 +157,7 @@ body {
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
   background-color: var(--bg-color);
   background-image: var(--body-bg-img);
-  background-size: cover;
+  background-size: 100% 100%;
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: fixed;
