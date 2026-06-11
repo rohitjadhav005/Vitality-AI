@@ -49,8 +49,8 @@ html {
   --bg-color: #F0F4F8;
 
   /* ── Apple-style Frosted Glass (Light) ── */
-  /* Sidebar: almost opaque but with enough transparency for the blur to work */
-  --sidebar-bg: rgba(255, 255, 255, 0.85);
+  /* Sidebar: solid opaque color (zero transparency) */
+  --sidebar-bg: #ffffff;
   --menu-active-bg: rgba(239, 68, 68, 0.08);
 
   --glass-bg: rgba(255, 255, 255, 0.58);
@@ -98,8 +98,8 @@ html {
   --bg-color: #080A0F;
 
   /* ── Apple-style Frosted Glass (Dark) ── */
-  /* Sidebar: deeply tinted but glassy */
-  --sidebar-bg: rgba(12, 16, 28, 0.90);
+  /* Sidebar: solid opaque color (zero transparency) */
+  --sidebar-bg: #0c1222;
   --menu-active-bg: rgba(239, 68, 68, 0.10);
 
   --glass-bg: rgba(16, 22, 38, 0.68);
