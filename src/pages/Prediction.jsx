@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useAuth } from '../components/AuthContext';
 import { apiUrl } from '../config/api';
 import { Moon, Brain, Dumbbell, Droplets, Monitor, Smile, Zap, Activity, Loader2, Sparkles, AlertTriangle, Frown, Meh, SmilePlus } from 'lucide-react';
@@ -12,29 +12,75 @@ const getWarning = (key, value) => {
   return null;
 };
 
-const ScoreRing = ({ label, value, color }) => {
+// Easing function: easeOutExpo
+const easeOutExpo = (t) => (t === 1 ? 1 : 1 - Math.pow(2, -10 * t));
+
+const ScoreRing = ({ label, value, color, delay = 0 }) => {
   const r = 54;
   const circ = 2 * Math.PI * r;
-  const filled = circ * ((value || 0) / 100);
+
+  const [displayValue, setDisplayValue] = useState(0);
+  const [animatedFill, setAnimatedFill] = useState(0);
+  const rafRef = useRef(null);
+
+  useEffect(() => {
+    if (value == null) return;
+
+    const duration = 1400; // ms
+    const startDelay = delay;
+    let startTime = null;
+
+    const animate = (timestamp) => {
+      if (!startTime) startTime = timestamp;
+      const elapsed = timestamp - startTime - startDelay;
+      if (elapsed < 0) {
+        rafRef.current = requestAnimationFrame(animate);
+        return;
+      }
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = easeOutExpo(progress);
+      const current = Math.round(eased * value);
+      setDisplayValue(current);
+      setAnimatedFill(circ * (current / 100));
+      if (progress < 1) {
+        rafRef.current = requestAnimationFrame(animate);
+      }
+    };
+
+    // Reset to 0 first
+    setDisplayValue(0);
+    setAnimatedFill(0);
+    rafRef.current = requestAnimationFrame(animate);
+
+    return () => {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
+  }, [value, circ, delay]);
+
   return (
     <div className="score-ring-wrap" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       <svg viewBox="0 0 130 130" width="130" height="130">
+        {/* Track */}
         <circle cx="65" cy="65" r={r} fill="none" stroke="var(--glass-border)" strokeWidth="10" />
+        {/* Animated fill */}
         <circle
           cx="65" cy="65" r={r} fill="none"
           stroke={color} strokeWidth="10"
-          strokeDasharray={`${filled} ${circ}`}
+          strokeDasharray={`${animatedFill} ${circ}`}
           strokeLinecap="round"
           transform="rotate(-90 65 65)"
-          style={{ transition: 'stroke-dasharray 1.2s cubic-bezier(0.34,1.56,0.64,1)' }}
         />
-        <text x="65" y="62" textAnchor="middle" fill={color} fontSize="24" fontWeight="800">{value ?? '--'}</text>
+        {/* Animated counter number */}
+        <text x="65" y="62" textAnchor="middle" fill={color} fontSize="24" fontWeight="800">
+          {displayValue}
+        </text>
         <text x="65" y="78" textAnchor="middle" fill="var(--text-secondary)" fontSize="11">/100</text>
       </svg>
       <div className="score-ring-label" style={{ fontWeight: 600, color: 'var(--text-secondary)', marginTop: '8px' }}>{label}</div>
     </div>
   );
 };
+
 
 // --- Custom Input Components ---
 
@@ -360,8 +406,8 @@ const Prediction = () => {
               </div>
               
               <div className="score-rings-row" style={{ display: 'flex', justifyContent: 'space-around', margin: 'clamp(1.5rem, 4vw, 3rem) 0', gap: '1rem', flexWrap: 'wrap' }}>
-                <ScoreRing label="Energy Level"      value={results?.Energy_Score}      color="var(--primary-color)" />
-                <ScoreRing label="Focus Potential"    value={results?.Productivity_Score} color="var(--text-primary)" />
+                <ScoreRing label="Energy Level"   value={results?.Energy_Score}      color="var(--primary-color)" delay={0} />
+                <ScoreRing label="Focus Potential" value={results?.Productivity_Score} color="var(--text-primary)"  delay={200} />
               </div>
               
               <div className="prediction-advice advice-slide-animated" style={{ marginTop: '2rem', padding: 'clamp(1rem, 3vw, 1.5rem)', background: 'var(--glass-bg)', border: '1px solid var(--glass-border)', borderRadius: '16px', textAlign: 'center' }}>
