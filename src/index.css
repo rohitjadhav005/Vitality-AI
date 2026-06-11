@@ -110,6 +110,10 @@ html {
   box-sizing: border-box;
 }
 
+button, input, select, textarea {
+  font-family: inherit;
+}
+
 html {
   transition: background-color 0.3s ease, color 0.3s ease;
   overflow-x: hidden;

@@ -39,21 +39,27 @@ const ScoreRing = ({ label, value, color }) => {
 // --- Custom Input Components ---
 
 const EmojiSelector = ({ value, onChange, name, max = 10, reversed = false }) => {
-  const emojis = [
-    { icon: <Frown size={28} />, threshold: 3, label: 'Low' },
-    { icon: <Meh size={28} />, threshold: 7, label: 'Moderate' },
-    { icon: <SmilePlus size={28} />, threshold: 10, label: 'High' }
+  const emojis = reversed ? [
+    { icon: <SmilePlus size={28} />, color: '#10b981', label: 'Low' },
+    { icon: <Meh size={28} />, color: '#f59e0b', label: 'Moderate' },
+    { icon: <Frown size={28} />, color: '#ef4444', label: 'High' }
+  ] : [
+    { icon: <Frown size={28} />, color: '#ef4444', label: 'Low' },
+    { icon: <Meh size={28} />, color: '#f59e0b', label: 'Moderate' },
+    { icon: <SmilePlus size={28} />, color: '#10b981', label: 'High' }
   ];
 
   const currentEmoji = value <= 3 ? emojis[0] : value <= 7 ? emojis[1] : emojis[2];
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <span style={{ fontSize: '2rem', color: value > 7 ? (reversed ? 'var(--primary-color)' : 'var(--text-primary)') : 'var(--text-secondary)' }}>
+        <span style={{ display: 'flex', color: currentEmoji.color, transition: 'color 0.2s' }}>
           {currentEmoji.icon}
         </span>
-        <span style={{ fontWeight: 700, fontSize: '1.2rem', color: 'var(--primary-color)' }}>{value}/10</span>
+        <span style={{ fontWeight: 800, fontSize: '1.1rem', color: currentEmoji.color }}>
+          {value}/10
+        </span>
       </div>
       <input
         type="range" name={name}
@@ -61,7 +67,7 @@ const EmojiSelector = ({ value, onChange, name, max = 10, reversed = false }) =>
         value={value}
         onChange={onChange}
         className="pred-slider interactive-slider"
-        style={{ '--pct': `${((value - 1) / 9) * 100}%`, '--thumb-color': 'var(--primary-color)' }}
+        style={{ '--pct': `${((value - 1) / 9) * 100}%`, '--thumb-color': currentEmoji.color }}
       />
     </div>
   );
@@ -75,26 +81,29 @@ const WaterTracker = ({ value, onChange, name }) => {
   };
 
   return (
-    <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginTop: '10px' }}>
+    <div style={{ display: 'flex', gap: '6px', width: '100%', marginTop: '8px' }}>
       {cups.map((cup) => (
         <button
           key={cup}
+          type="button"
           onClick={() => handleClick(cup)}
           style={{
-            background: value >= cup ? 'rgba(59, 130, 246, 0.2)' : 'var(--glass-border)',
-            border: `2px solid ${value >= cup ? '#3b82f6' : 'transparent'}`,
-            borderRadius: '12px',
-            padding: '10px',
+            background: value >= cup ? 'rgba(59, 130, 246, 0.15)' : 'var(--glass-border)',
+            border: `1.5px solid ${value >= cup ? '#3b82f6' : 'transparent'}`,
+            borderRadius: '10px',
+            padding: '6px 4px',
             cursor: 'pointer',
             transition: 'all 0.2s',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            minWidth: '50px'
+            justifyContent: 'center',
+            flex: 1,
+            minWidth: '0'
           }}
         >
-          <Droplets size={20} color={value >= cup ? '#3b82f6' : 'var(--text-secondary)'} style={{ marginBottom: '4px' }} />
-          <span style={{ fontSize: '0.75rem', fontWeight: 600, color: value >= cup ? '#3b82f6' : 'var(--text-secondary)' }}>{cup}L</span>
+          <Droplets size={16} color={value >= cup ? '#3b82f6' : 'var(--text-secondary)'} style={{ marginBottom: '2px' }} />
+          <span style={{ fontSize: '0.7rem', fontWeight: 700, color: value >= cup ? '#3b82f6' : 'var(--text-secondary)' }}>{cup}L</span>
         </button>
       ))}
     </div>
@@ -105,22 +114,29 @@ const SliderWithPresets = ({ value, onChange, name, min, max, step, presets, uni
   const pct = ((value - min) / (max - min)) * 100;
   
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', width: '100%' }}>
-      <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', width: '100%' }}>
+      <div style={{ display: 'flex', gap: '6px', flexWrap: 'nowrap', width: '100%' }}>
         {presets.map(preset => (
           <button
             key={preset.value}
+            type="button"
             onClick={() => onChange({ target: { name, value: preset.value } })}
             style={{
-              padding: '6px 12px',
-              borderRadius: '20px',
+              padding: '4px 6px',
+              borderRadius: '12px',
               background: value === preset.value ? color : 'var(--glass-bg)',
-              color: value === preset.value ? '#fff' : 'var(--text-secondary)',
+              color: value === preset.value ? (color === 'var(--text-primary)' ? 'var(--bg-color)' : '#fff') : 'var(--text-secondary)',
               border: `1px solid ${value === preset.value ? color : 'var(--glass-border)'}`,
-              fontSize: '0.8rem',
+              fontSize: '0.75rem',
               fontWeight: 600,
               cursor: 'pointer',
-              transition: 'all 0.2s'
+              transition: 'all 0.2s',
+              flex: 1,
+              minWidth: '0',
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              textAlign: 'center'
             }}
           >
             {preset.label}
@@ -184,27 +200,30 @@ const Prediction = () => {
         background: 'var(--glass-bg)',
         border: '1px solid var(--glass-border)',
         borderRadius: '16px',
-        padding: '1.5rem',
+        padding: '1.2rem',
         boxShadow: '0 4px 6px rgba(0,0,0,0.05)',
         transition: 'transform 0.2s ease',
       }}>
-        <div className="pred-field-top" style={{ marginBottom: '1rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <div className="pred-field-top" style={{ marginBottom: '0.75rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div className="pred-field-label" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <span className="pred-field-icon" style={{ background: 'rgba(239, 68, 68, 0.1)', color: 'var(--primary-color)', padding: '8px', borderRadius: '10px', display: 'flex' }}>
               {icon}
             </span>
-            <span className="pred-label-text" style={{ color: 'var(--text-primary)', fontWeight: 700, fontSize: '1.1rem' }}>{label}</span>
+            <span className="pred-label-text" style={{ color: 'var(--text-primary)', fontWeight: 700, fontSize: '1.05rem' }}>{label}</span>
           </div>
-          {key !== 'Stress_Level' && key !== 'Mood_Score' && key !== 'Water_Intake_L' && (
-            <span style={{ fontWeight: 800, fontSize: '1.2rem', color: 'var(--text-primary)' }}>
+          {key !== 'Stress_Level' && key !== 'Mood_Score' && (
+            <span style={{ fontWeight: 800, fontSize: '1.1rem', color: 'var(--text-primary)' }}>
               {formData[key]}
+              <span style={{ fontSize: '0.82rem', fontWeight: 600, color: 'var(--text-secondary)', marginLeft: '2px' }}>
+                {key === 'Sleep_Hours' ? ' hrs' : key === 'Exercise_Duration_min' ? ' mins' : key === 'Screen_Time_hr' ? ' hrs' : key === 'Water_Intake_L' ? ' L' : ''}
+              </span>
             </span>
           )}
         </div>
         {content}
         {warning && (
-          <div className="pred-warning" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginTop: '1rem', color: 'var(--primary-color)', fontSize: '0.85rem', fontWeight: 600, background: 'rgba(239, 68, 68, 0.1)', padding: '8px 12px', borderRadius: '8px' }}>
-            <AlertTriangle size={16} />
+          <div className="pred-warning" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginTop: '0.75rem', color: 'var(--primary-color)', fontSize: '0.82rem', fontWeight: 600, background: 'rgba(239, 68, 68, 0.1)', padding: '6px 10px', borderRadius: '8px' }}>
+            <AlertTriangle size={14} />
             <span>{warning}</span>
           </div>
         )}
@@ -283,6 +302,7 @@ const Prediction = () => {
             padding: 'clamp(1rem, 3vw, 1.2rem)',
             fontSize: 'clamp(1.05rem, 3vw, 1.2rem)',
             fontWeight: 800,
+            fontFamily: 'inherit',
             borderRadius: '16px',
             background: 'linear-gradient(135deg, var(--primary-color), #f43f5e)',
             boxShadow: '0 8px 20px rgba(239, 68, 68, 0.3)',
@@ -295,8 +315,14 @@ const Prediction = () => {
             gap: '10px',
             transition: 'transform 0.2s, box-shadow 0.2s'
           }}
-          onMouseOver={(e) => e.currentTarget.style.transform = 'translateY(-2px)'}
-          onMouseOut={(e) => e.currentTarget.style.transform = 'translateY(0)'}
+          onMouseOver={(e) => {
+            e.currentTarget.style.transform = 'translateY(-2px)';
+            e.currentTarget.style.boxShadow = '0 12px 24px rgba(239, 68, 68, 0.45)';
+          }}
+          onMouseOut={(e) => {
+            e.currentTarget.style.transform = 'translateY(0)';
+            e.currentTarget.style.boxShadow = '0 8px 20px rgba(239, 68, 68, 0.3)';
+          }}
         >
           {loading
             ? <><Loader2 size={24} className="spin-icon" /> Analyzing your vitals...</>
