@@ -42,37 +42,52 @@ const Dashboard = () => {
   const [error, setError] = useState(null);
   const { logout } = useAuth();
 
-  const fetchDashboardData = useCallback(async () => {
+  const fetchDashboardData = useCallback(() => {
     const token = localStorage.getItem('token');
     if (!token) {
       logout();
       return;
     }
     const headers = { 'Authorization': `Bearer ${token}` };
-    try {
-      const [summaryRes, trendsRes, insightsRes] = await Promise.all([
-        fetch(apiUrl('/api/dashboard/summary'), { headers }),
-        fetch(apiUrl('/api/dashboard/trends'), { headers }),
-        fetch(apiUrl('/api/dashboard/insights'), { headers })
-      ]);
 
-      if (summaryRes.status === 401 || trendsRes.status === 401 || insightsRes.status === 401) {
-        logout();
-        return;
-      }
+    const handleRes = (res) => {
+      if (res.status === 401) logout();
+      return res;
+    };
 
-      if (!summaryRes.ok) throw new Error('Failed to fetch summary');
-      
-      setSummary(await summaryRes.json());
-      
-      if (trendsRes.ok) setTrends(await trendsRes.json());
-      if (insightsRes.ok) setInsights(await insightsRes.json());
-    } catch (error) {
-      console.error('Failed to fetch dashboard data', error);
-      setError(true);
-    } finally {
-      setLoading(false);
-    }
+    setLoading(true);
+    setError(null);
+
+    // 1. Fetch summary (most important, unblocks the dashboard render)
+    fetch(apiUrl('/api/dashboard/summary'), { headers })
+      .then(handleRes)
+      .then(res => {
+        if (!res.ok) throw new Error('Failed to fetch summary');
+        return res.json();
+      })
+      .then(data => {
+        setSummary(data);
+        setLoading(false); // Render dashboard immediately
+      })
+      .catch(error => {
+        console.error('Failed to fetch summary', error);
+        setError(true);
+        setLoading(false);
+      });
+
+    // 2. Fetch trends independently
+    fetch(apiUrl('/api/dashboard/trends'), { headers })
+      .then(handleRes)
+      .then(res => res.ok ? res.json() : [])
+      .then(setTrends)
+      .catch(e => console.error('Failed to fetch trends', e));
+
+    // 3. Fetch insights independently
+    fetch(apiUrl('/api/dashboard/insights'), { headers })
+      .then(handleRes)
+      .then(res => res.ok ? res.json() : [])
+      .then(setInsights)
+      .catch(e => console.error('Failed to fetch insights', e));
   }, [logout]);
 
   useEffect(() => {
