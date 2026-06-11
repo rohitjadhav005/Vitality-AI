@@ -1082,11 +1082,11 @@ input[type=range]::-webkit-slider-thumb:hover {
 
 /* ── Prediction Page Animations ── */
 
-/* Staggered card slide-up with fade */
+/* Staggered card slide-up — GPU composited */
 @keyframes predCardIn {
   from {
     opacity: 0;
-    transform: translateY(22px) scale(0.97);
+    transform: translateY(28px) scale(0.96);
   }
   to {
     opacity: 1;
@@ -1096,23 +1096,25 @@ input[type=range]::-webkit-slider-thumb:hover {
 
 .pred-card-animated {
   opacity: 0;
-  animation: predCardIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: transform, opacity;
+  animation: predCardIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
 .pred-card-animated:hover {
-  transform: translateY(-3px) !important;
-  box-shadow: 0 10px 30px rgba(239, 68, 68, 0.12) !important;
-  border-color: rgba(239, 68, 68, 0.2) !important;
-  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
-              box-shadow 0.25s ease,
-              border-color 0.25s ease !important;
+  transform: translateY(-4px) scale(1.01) !important;
+  box-shadow: 0 12px 32px rgba(239, 68, 68, 0.14) !important;
+  border-color: rgba(239, 68, 68, 0.25) !important;
+  transition:
+    transform    0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow   0.35s ease,
+    border-color 0.35s ease !important;
 }
 
-/* Header slide in */
+/* Header slide-in from left */
 @keyframes predHeaderIn {
   from {
     opacity: 0;
-    transform: translateX(-18px);
+    transform: translateX(-24px);
   }
   to {
     opacity: 1;
@@ -1121,41 +1123,59 @@ input[type=range]::-webkit-slider-thumb:hover {
 }
 
 .pred-header-animated {
-  animation: predHeaderIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: transform, opacity;
+  animation: predHeaderIn 0.65s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
-/* Results card dramatic reveal */
+/* Results card — scale+blur reveal */
 @keyframes resultReveal {
   from {
     opacity: 0;
-    transform: translateY(30px) scale(0.94);
-    filter: blur(4px);
+    transform: translateY(36px) scale(0.92);
+    filter: blur(6px);
+  }
+  60% {
+    filter: blur(0px);
   }
   to {
     opacity: 1;
     transform: translateY(0) scale(1);
-    filter: blur(0);
+    filter: blur(0px);
   }
 }
 
 .result-reveal-animated {
-  animation: resultReveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: transform, opacity, filter;
+  animation: resultReveal 0.75s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
-/* Advice card slides up */
+/* Advice banner slides up with a longer settling curve */
 @keyframes adviceSlide {
-  from { opacity: 0; transform: translateY(16px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .advice-slide-animated {
-  animation: adviceSlide 0.5s 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+  will-change: transform, opacity;
+  animation: adviceSlide 0.65s 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-/* Awaiting state: pulsing background orb */
+/* Awaiting orb — very slow, breathable pulse */
 @keyframes orbPulse {
-  0%, 100% { transform: scale(1);   opacity: 0.12; }
-  50%       { transform: scale(1.4); opacity: 0.22; }
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.10;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.5);
+    opacity: 0.20;
+  }
 }
 
 .awaiting-animated {
@@ -1165,67 +1185,83 @@ input[type=range]::-webkit-slider-thumb:hover {
 
 .awaiting-orb {
   position: absolute;
-  width: 220px;
-  height: 220px;
-  background: radial-gradient(circle, var(--primary-color), transparent 70%);
+  width: 240px;
+  height: 240px;
+  background: radial-gradient(circle, var(--primary-color), transparent 65%);
   border-radius: 50%;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
-  animation: orbPulse 2.8s ease-in-out infinite;
+  will-change: transform, opacity;
+  animation: orbPulse 3.5s ease-in-out infinite;
   pointer-events: none;
 }
 
-/* Sparkle icon gentle spin + pulse */
+/* Sparkle icon — gentle clockwise oscillation */
 @keyframes sparkleSpin {
-  0%   { transform: rotate(0deg)   scale(1); }
-  50%  { transform: rotate(20deg)  scale(1.15); }
-  100% { transform: rotate(0deg)   scale(1); }
+  0%   { transform: rotate(-12deg) scale(0.95); }
+  50%  { transform: rotate(14deg)  scale(1.12); }
+  100% { transform: rotate(-12deg) scale(0.95); }
 }
 
 .sparkle-icon-wrap {
-  animation: sparkleSpin 2.5s ease-in-out infinite;
+  will-change: transform;
+  animation: sparkleSpin 3s ease-in-out infinite;
 }
 
-/* Warning banner pop-in */
+/* Warning banner — smooth spring pop */
 @keyframes warningPop {
-  from { opacity: 0; transform: scale(0.92) translateY(4px); }
-  to   { opacity: 1; transform: scale(1)    translateY(0); }
+  from { opacity: 0; transform: scale(0.88) translateY(6px); }
+  70%  { transform: scale(1.02) translateY(-1px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
 }
 
 .pred-warning-animated {
-  animation: warningPop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  will-change: transform, opacity;
+  animation: warningPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
 
-/* Button shimmer on hover */
+/* Button shimmer sweep */
 @keyframes btnShimmer {
-  0%   { left: -100%; }
-  100% { left: 160%; }
+  0%   { left: -110%; opacity: 0; }
+  20%  { opacity: 1; }
+  80%  { opacity: 1; }
+  100% { left: 170%; opacity: 0; }
+}
+
+.pred-btn-animated {
+  will-change: transform, box-shadow;
 }
 
 .pred-btn-animated::before {
   content: '';
   position: absolute;
-  top: 0;
-  left: -100%;
-  width: 60%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
-  transform: skewX(-20deg);
-  transition: none;
+  top: -10%;
+  left: -110%;
+  width: 55%;
+  height: 120%;
+  background: linear-gradient(
+    100deg,
+    transparent 20%,
+    rgba(255, 255, 255, 0.3) 50%,
+    transparent 80%
+  );
+  transform: skewX(-22deg);
+  pointer-events: none;
 }
 
-.pred-btn-animated:hover::before {
-  animation: btnShimmer 0.6s ease forwards;
+.pred-btn-animated:not(:disabled):hover::before {
+  animation: btnShimmer 0.75s ease forwards;
 }
 
-/* Spin animation for loader icon */
-@keyframes spin {
-  to { transform: rotate(360deg); }
+/* Loader spin — smooth */
+@keyframes smoothSpin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
 }
 
 .spin-icon {
-  animation: spin 0.9s linear infinite;
+  will-change: transform;
+  animation: smoothSpin 0.85s linear infinite;
 }
 
 /* ── Analytics & Insights shared ── */
