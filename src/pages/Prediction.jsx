@@ -12,120 +12,71 @@ const getWarning = (key, value) => {
   return null;
 };
 
-// Smooth easing: easeInOutQuart — slow start, fast middle, slow end
-const easeInOutQuart = (t) =>
-  t < 0.5 ? 8 * t * t * t * t : 1 - Math.pow(-2 * t + 2, 4) / 2;
+// Easing function: easeOutExpo
+const easeOutExpo = (t) => (t === 1 ? 1 : 1 - Math.pow(2, -10 * t));
 
 const ScoreRing = ({ label, value, color, delay = 0 }) => {
   const r = 54;
   const circ = 2 * Math.PI * r;
 
-  // Separate smooth float for arc vs rounded int for number
   const [displayValue, setDisplayValue] = useState(0);
-  const [arcFill, setArcFill] = useState(0);      // continuous float — silky arc
-  const [glowOpacity, setGlowOpacity] = useState(0);
+  const [animatedFill, setAnimatedFill] = useState(0);
   const rafRef = useRef(null);
 
   useEffect(() => {
     if (value == null) return;
 
-    const duration = 1800;
+    const duration = 1400; // ms
+    const startDelay = delay;
     let startTime = null;
 
     const animate = (timestamp) => {
       if (!startTime) startTime = timestamp;
-      const elapsed = timestamp - startTime - delay;
-
+      const elapsed = timestamp - startTime - startDelay;
       if (elapsed < 0) {
         rafRef.current = requestAnimationFrame(animate);
         return;
       }
-
-      const rawProgress = Math.min(elapsed / duration, 1);
-      const eased = easeInOutQuart(rawProgress);      // smooth 0→1
-
-      // Arc uses RAW float — buttery smooth, no rounding
-      setArcFill(circ * (eased * value / 100));
-
-      // Counter uses rounded integer — readable digits
-      setDisplayValue(Math.round(eased * value));
-
-      // Glow fades in as ring fills
-      setGlowOpacity(eased * 0.8);
-
-      if (rawProgress < 1) {
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = easeOutExpo(progress);
+      const current = Math.round(eased * value);
+      setDisplayValue(current);
+      setAnimatedFill(circ * (current / 100));
+      if (progress < 1) {
         rafRef.current = requestAnimationFrame(animate);
       }
     };
 
-    // Hard reset before re-animating
+    // Reset to 0 first
     setDisplayValue(0);
-    setArcFill(0);
-    setGlowOpacity(0);
+    setAnimatedFill(0);
     rafRef.current = requestAnimationFrame(animate);
 
-    return () => { if (rafRef.current) cancelAnimationFrame(rafRef.current); };
+    return () => {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
   }, [value, circ, delay]);
 
   return (
-    <div
-      className="score-ring-wrap"
-      style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
-    >
-      <svg
-        viewBox="0 0 130 130"
-        width="130" height="130"
-        style={{ overflow: 'visible', willChange: 'transform' }}
-      >
-        {/* Glow filter */}
-        <defs>
-          <filter id={`glow-${label.replace(/\s/g,'')}`} x="-30%" y="-30%" width="160%" height="160%">
-            <feGaussianBlur stdDeviation="5" result="blur" />
-            <feMerge>
-              <feMergeNode in="blur" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
-          </filter>
-        </defs>
-
-        {/* Track ring */}
+    <div className="score-ring-wrap" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      <svg viewBox="0 0 130 130" width="130" height="130">
+        {/* Track */}
         <circle cx="65" cy="65" r={r} fill="none" stroke="var(--glass-border)" strokeWidth="10" />
-
-        {/* Animated fill arc — GPU composited, float precision */}
+        {/* Animated fill */}
         <circle
           cx="65" cy="65" r={r} fill="none"
-          stroke={color}
-          strokeWidth="10"
-          strokeDasharray={`${arcFill} ${circ}`}
+          stroke={color} strokeWidth="10"
+          strokeDasharray={`${animatedFill} ${circ}`}
           strokeLinecap="round"
           transform="rotate(-90 65 65)"
-          style={{
-            willChange: 'stroke-dasharray',
-            filter: `url(#glow-${label.replace(/\s/g,'')})`,
-            opacity: 0.3 + glowOpacity * 0.7,
-          }}
         />
-
-        {/* Counter number */}
-        <text
-          x="65" y="62"
-          textAnchor="middle"
-          fill={color}
-          fontSize="24"
-          fontWeight="800"
-          style={{ transition: 'fill 0.3s ease' }}
-        >
+        {/* Animated counter number */}
+        <text x="65" y="62" textAnchor="middle" fill={color} fontSize="24" fontWeight="800">
           {displayValue}
         </text>
         <text x="65" y="78" textAnchor="middle" fill="var(--text-secondary)" fontSize="11">/100</text>
       </svg>
-
-      <div
-        className="score-ring-label"
-        style={{ fontWeight: 600, color: 'var(--text-secondary)', marginTop: '8px' }}
-      >
-        {label}
-      </div>
+      <div className="score-ring-label" style={{ fontWeight: 600, color: 'var(--text-secondary)', marginTop: '8px' }}>{label}</div>
     </div>
   );
 };
