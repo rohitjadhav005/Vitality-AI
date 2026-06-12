@@ -6,8 +6,6 @@ def _normalize_database_url(url: str) -> str:
     if url.startswith("postgres://"):
         return url.replace("postgres://", "postgresql://", 1)
     return url
-
-
 def _create_engine():
     url = os.getenv("DATABASE_URL")
     if url:
@@ -23,7 +21,6 @@ def _create_engine():
     except Exception:
         sqlite_url = "sqlite:///./energy_app.db"
         return create_engine(sqlite_url, connect_args={"check_same_thread": False}), sqlite_url
-
 
 engine, DATABASE_URL = _create_engine()
 
